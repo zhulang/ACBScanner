@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CenterCongfig</key>
+	<dict>
+		<key>maxInterfaceNumber</key>
+		<integer>0</integer>
+		<key>maxCacheNumber</key>
+		<integer>0</integer>
+		<key>uploadUrl</key>
+		<string></string>
+		<key>dataUrl</key>
+		<string></string>
+	</dict>
+	<key>PeripheralCongfig</key>
+	<dict>
+		<key>brightness</key>
+		<integer>0</integer>
+		<key>torchOn</key>
+		<integer>0</integer>
+		<key>trochAuto</key>
+		<integer>0</integer>
+	</dict>
+	<key>ScannerOperator</key>
+	<dict>
+		<key>name</key>
+		<string></string>
+		<key>number</key>
+		<string></string>
+	</dict>
+</dict>
+</plist>

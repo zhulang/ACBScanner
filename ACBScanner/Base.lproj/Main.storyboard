@@ -1,24 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jds-pm-8sV">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--ACBScanner-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mT8-4U-UAc">
+                                <rect key="frame" x="64" y="328" width="286" height="64"/>
+                                <color key="backgroundColor" red="0.58122764284195849" green="0.79823955540406655" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="xp8-BX-FyQ"/>
+                                </constraints>
+                                <state key="normal" title="中心设备（Center Machine）">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="asCenterMachine:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lnW-oC-yvI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnQ-04-mzB">
+                                <rect key="frame" x="64" y="422" width="286" height="64"/>
+                                <color key="backgroundColor" red="0.62745098039215685" green="0.792156862745098" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="扫描仪（Scanner）">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="asViceMachine:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6yd-pu-rRg"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="中心设备服务名称" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5f6-rW-Zqh">
+                                <rect key="frame" x="64" y="260" width="286" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gax-bq-qr3"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="操作者姓名" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SJc-el-gQS">
+                                <rect key="frame" x="64" y="148" width="286" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="e9p-T1-M7N"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="操作者工号" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cCh-KB-kkg">
+                                <rect key="frame" x="64" y="204" width="286" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="s8W-rP-hLH"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgB-Hi-jac">
+                                <rect key="frame" x="207" y="842" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="cCh-KB-kkg" firstAttribute="width" secondItem="SJc-el-gQS" secondAttribute="width" id="0Aw-JV-pbv"/>
+                            <constraint firstItem="SJc-el-gQS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="2xP-Zw-Lbl"/>
+                            <constraint firstItem="cCh-KB-kkg" firstAttribute="top" secondItem="SJc-el-gQS" secondAttribute="bottom" constant="12" id="33U-V4-g60"/>
+                            <constraint firstItem="cnQ-04-mzB" firstAttribute="width" secondItem="mT8-4U-UAc" secondAttribute="width" id="5Ll-fc-gHN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EgB-Hi-jac" secondAttribute="bottom" constant="20" id="EAe-7B-w9s"/>
+                            <constraint firstItem="EgB-Hi-jac" firstAttribute="centerX" secondItem="cnQ-04-mzB" secondAttribute="centerX" id="FIe-sq-O2T"/>
+                            <constraint firstItem="5f6-rW-Zqh" firstAttribute="top" secondItem="cCh-KB-kkg" secondAttribute="bottom" constant="12" id="HTG-7E-KBb"/>
+                            <constraint firstItem="cnQ-04-mzB" firstAttribute="centerX" secondItem="mT8-4U-UAc" secondAttribute="centerX" id="QbH-JW-rU3"/>
+                            <constraint firstItem="SJc-el-gQS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="R9V-PR-m1l"/>
+                            <constraint firstItem="cnQ-04-mzB" firstAttribute="top" secondItem="mT8-4U-UAc" secondAttribute="bottom" constant="30" id="Wzk-v1-Hit"/>
+                            <constraint firstItem="mT8-4U-UAc" firstAttribute="centerX" secondItem="5f6-rW-Zqh" secondAttribute="centerX" id="auq-Jc-6iU"/>
+                            <constraint firstItem="mT8-4U-UAc" firstAttribute="leading" secondItem="5f6-rW-Zqh" secondAttribute="leading" id="cJl-4v-hiP"/>
+                            <constraint firstItem="mT8-4U-UAc" firstAttribute="top" secondItem="5f6-rW-Zqh" secondAttribute="bottom" constant="24" id="d1k-6T-wVT"/>
+                            <constraint firstItem="5f6-rW-Zqh" firstAttribute="width" secondItem="cCh-KB-kkg" secondAttribute="width" id="m3Y-wI-kca"/>
+                            <constraint firstItem="cCh-KB-kkg" firstAttribute="centerX" secondItem="SJc-el-gQS" secondAttribute="centerX" id="w4H-KF-MgX"/>
+                            <constraint firstItem="SJc-el-gQS" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="whp-SV-JOW"/>
+                            <constraint firstItem="5f6-rW-Zqh" firstAttribute="centerX" secondItem="cCh-KB-kkg" secondAttribute="centerX" id="xHj-JD-fzy"/>
+                            <constraint firstItem="cnQ-04-mzB" firstAttribute="height" secondItem="mT8-4U-UAc" secondAttribute="height" id="xZU-7I-nbu"/>
+                            <constraint firstItem="mT8-4U-UAc" firstAttribute="width" secondItem="5f6-rW-Zqh" secondAttribute="width" id="yB6-KN-57I"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="ACBScanner" id="vi9-K2-gxr"/>
+                    <connections>
+                        <outlet property="centerMachineButton" destination="mT8-4U-UAc" id="nyt-RG-V9E"/>
+                        <outlet property="operatorNameTextField" destination="SJc-el-gQS" id="3p3-CL-Z9h"/>
+                        <outlet property="operatorNumberTextField" destination="cCh-KB-kkg" id="BWH-Ze-47I"/>
+                        <outlet property="peripheralMachineButton" destination="cnQ-04-mzB" id="Th9-1F-8ix"/>
+                        <outlet property="textField" destination="5f6-rW-Zqh" id="6a9-nf-CTr"/>
+                        <outlet property="tipLabel" destination="EgB-Hi-jac" id="plW-z0-a1V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1013.0434782608696" y="-250.44642857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EtV-tm-gk4">
+            <objects>
+                <navigationController id="jds-pm-8sV" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ltF-Yy-h48">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="C9l-Wd-hIi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hr1-rT-CRy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="145" y="-250"/>
         </scene>
     </scenes>
 </document>

@@ -1,6 +1,6 @@
 //
-//  ACBScannerTests.m
-//  ACBScannerTests
+//  BScannerTests.m
+//  BScannerTests
 //
 //  Created by 朱浪 on 2019/5/23.
 //  Copyright © 2019 朱浪. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface ACBScannerTests : XCTestCase
+@interface BScannerTests : XCTestCase
 
 @end
 
-@implementation ACBScannerTests
+@implementation BScannerTests
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
