@@ -76,7 +76,7 @@
                         <action selector="autoTorchDidChange:" destination="-1" eventType="valueChanged" id="era-nh-SwE"/>
                     </connections>
                 </switch>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PrG-vd-imo">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.01" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PrG-vd-imo">
                     <rect key="frame" x="30" y="276" width="315" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="Qtl-KY-QDg"/>

@@ -18,19 +18,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UIButton *centerMachineButton;
 @property (weak, nonatomic) IBOutlet UIButton *peripheralMachineButton;
-@property (strong, nonatomic) ACBScannerCongfig *config;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad
 {
-    self.config = [ACBScannerCongfig config];
     UITapGestureRecognizer * tapView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fieldResignFirstResponder)];
     [self.view addGestureRecognizer:tapView];
     self.textField.text = @"999";
-    self.operatorNameTextField.text = self.config.worker.name;
-    self.operatorNumberTextField.text = self.config.worker.number;
+    self.operatorNameTextField.text = [ACBScannerManager getOperatorName];
+    self.operatorNumberTextField.text = [ACBScannerManager getOperatorNumber];
     self.tipLabel.text =
      @"使用说明：\n"
      @"1.中心设备服务名称为必填项。\n"
@@ -100,12 +98,10 @@
 {
     NSString * str = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if ([textField isEqual:self.operatorNameTextField]) {
-        [ACBScannerCongfig config].worker.name = str;
-        [ACBScannerCongfig archiver];
+        [ACBScannerManager setOperatorName:str];
     }
     if ([textField isEqual:self.operatorNumberTextField]) {
-        [ACBScannerCongfig config].worker.number = str;
-        [ACBScannerCongfig archiver];
+        [ACBScannerManager setOperatorNumber:str];
     }
     return YES;
 }

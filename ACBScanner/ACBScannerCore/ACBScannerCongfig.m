@@ -32,7 +32,7 @@
                 centerConfig.maxCacheNumber = 2000;
                 centerConfig.uploadUrl = @"";
                 centerConfig.dataUrl = @"";
-                centerConfig.autoUpload = NO;
+                centerConfig.autoUpload = YES;
                 instance.centerConfig = centerConfig;
                 ScannerOperator * people = [[ScannerOperator alloc] init];
                 people.name = @"";

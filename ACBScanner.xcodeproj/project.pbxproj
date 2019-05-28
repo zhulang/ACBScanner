@@ -11,11 +11,9 @@
 		6F3FBD44229833B400E3B97C /* CenterMachineSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD42229833B400E3B97C /* CenterMachineSettingViewController.m */; };
 		6F3FBD45229833B400E3B97C /* CenterMachineSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */; };
 		6F3FBD532298EAE600E3B97C /* ACBScannerCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD522298EAE600E3B97C /* ACBScannerCongfig.m */; };
-		6F3FBD552298EEBA00E3B97C /* Congfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD542298EEBA00E3B97C /* Congfig.plist */; };
 		6F3FBD57229901A500E3B97C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD56229901A500E3B97C /* Podfile */; };
 		6F3FBD5B22993BE800E3B97C /* CodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD5922993BE800E3B97C /* CodeTableViewCell.m */; };
 		6F3FBD5C22993BE800E3B97C /* CodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD5A22993BE800E3B97C /* CodeTableViewCell.xib */; };
-		6F3FBD5F22994D1400E3B97C /* CodeInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD5E22994D1400E3B97C /* CodeInfoTableViewCell.m */; };
 		6F3FBD632299611400E3B97C /* ACBScannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD622299611400E3B97C /* ACBScannerManager.m */; };
 		6F3FBD67229A7BAF00E3B97C /* PeripheralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */; };
 		6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */; };
@@ -59,13 +57,10 @@
 		6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CenterMachineSettingViewController.xib; sourceTree = "<group>"; };
 		6F3FBD512298EAE600E3B97C /* ACBScannerCongfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACBScannerCongfig.h; sourceTree = "<group>"; };
 		6F3FBD522298EAE600E3B97C /* ACBScannerCongfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACBScannerCongfig.m; sourceTree = "<group>"; };
-		6F3FBD542298EEBA00E3B97C /* Congfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Congfig.plist; sourceTree = "<group>"; };
 		6F3FBD56229901A500E3B97C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6F3FBD5822993BE800E3B97C /* CodeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeTableViewCell.h; sourceTree = "<group>"; };
 		6F3FBD5922993BE800E3B97C /* CodeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeTableViewCell.m; sourceTree = "<group>"; };
 		6F3FBD5A22993BE800E3B97C /* CodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CodeTableViewCell.xib; sourceTree = "<group>"; };
-		6F3FBD5D22994D1400E3B97C /* CodeInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeInfoTableViewCell.h; sourceTree = "<group>"; };
-		6F3FBD5E22994D1400E3B97C /* CodeInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeInfoTableViewCell.m; sourceTree = "<group>"; };
 		6F3FBD612299611400E3B97C /* ACBScannerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACBScannerManager.h; sourceTree = "<group>"; };
 		6F3FBD622299611400E3B97C /* ACBScannerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACBScannerManager.m; sourceTree = "<group>"; };
 		6F3FBD64229A7BAF00E3B97C /* PeripheralSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralSettingViewController.h; sourceTree = "<group>"; };
@@ -134,7 +129,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6F3FBD6022995D5400E3B97C /* Core */ = {
+		6F3FBD6022995D5400E3B97C /* ACBScannerCore */ = {
 			isa = PBXGroup;
 			children = (
 				6F3FBD612299611400E3B97C /* ACBScannerManager.h */,
@@ -148,7 +143,7 @@
 				B7500301229D1B9300C070CC /* PeripheralCongfig.h */,
 				B7500302229D1B9300C070CC /* PeripheralCongfig.m */,
 			);
-			path = Core;
+			path = ACBScannerCore;
 			sourceTree = "<group>";
 		};
 		71AE6D595C34F8A0AF1591CC /* Pods */ = {
@@ -158,6 +153,42 @@
 				646E7A9012C8F24E3667D49C /* Pods-ACBScanner.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B7500304229D5AC600C070CC /* ACBScannerUI */ = {
+			isa = PBXGroup;
+			children = (
+				B7500306229D5BB900C070CC /* PeripheralMachine */,
+				B7500305229D5B9B00C070CC /* CenterMachine */,
+				6F3FBD5822993BE800E3B97C /* CodeTableViewCell.h */,
+				6F3FBD5922993BE800E3B97C /* CodeTableViewCell.m */,
+				6F3FBD5A22993BE800E3B97C /* CodeTableViewCell.xib */,
+			);
+			path = ACBScannerUI;
+			sourceTree = "<group>";
+		};
+		B7500305229D5B9B00C070CC /* CenterMachine */ = {
+			isa = PBXGroup;
+			children = (
+				B752D1F322969D8B0035712F /* CenterMachineTableViewController.h */,
+				B752D1F422969D8B0035712F /* CenterMachineTableViewController.m */,
+				6F3FBD41229833B400E3B97C /* CenterMachineSettingViewController.h */,
+				6F3FBD42229833B400E3B97C /* CenterMachineSettingViewController.m */,
+				6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */,
+			);
+			path = CenterMachine;
+			sourceTree = "<group>";
+		};
+		B7500306229D5BB900C070CC /* PeripheralMachine */ = {
+			isa = PBXGroup;
+			children = (
+				B752D1F622969E930035712F /* PeripheralMachineTableViewController.h */,
+				B752D1F722969E930035712F /* PeripheralMachineTableViewController.m */,
+				6F3FBD64229A7BAF00E3B97C /* PeripheralSettingViewController.h */,
+				6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */,
+				6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */,
+			);
+			path = PeripheralMachine;
 			sourceTree = "<group>";
 		};
 		B752D1B5229696290035712F = {
@@ -185,27 +216,12 @@
 		B752D1C0229696290035712F /* ACBScanner */ = {
 			isa = PBXGroup;
 			children = (
-				6F3FBD6022995D5400E3B97C /* Core */,
+				B7500304229D5AC600C070CC /* ACBScannerUI */,
+				6F3FBD6022995D5400E3B97C /* ACBScannerCore */,
 				B752D1C1229696290035712F /* AppDelegate.h */,
 				B752D1C2229696290035712F /* AppDelegate.m */,
 				B752D1C4229696290035712F /* ViewController.h */,
 				B752D1C5229696290035712F /* ViewController.m */,
-				B752D1F322969D8B0035712F /* CenterMachineTableViewController.h */,
-				B752D1F422969D8B0035712F /* CenterMachineTableViewController.m */,
-				6F3FBD41229833B400E3B97C /* CenterMachineSettingViewController.h */,
-				6F3FBD42229833B400E3B97C /* CenterMachineSettingViewController.m */,
-				6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */,
-				B752D1F622969E930035712F /* PeripheralMachineTableViewController.h */,
-				B752D1F722969E930035712F /* PeripheralMachineTableViewController.m */,
-				6F3FBD64229A7BAF00E3B97C /* PeripheralSettingViewController.h */,
-				6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */,
-				6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */,
-				6F3FBD5D22994D1400E3B97C /* CodeInfoTableViewCell.h */,
-				6F3FBD5E22994D1400E3B97C /* CodeInfoTableViewCell.m */,
-				6F3FBD5822993BE800E3B97C /* CodeTableViewCell.h */,
-				6F3FBD5922993BE800E3B97C /* CodeTableViewCell.m */,
-				6F3FBD5A22993BE800E3B97C /* CodeTableViewCell.xib */,
-				6F3FBD542298EEBA00E3B97C /* Congfig.plist */,
 				B752D1C7229696290035712F /* Main.storyboard */,
 				B752D1CA2296962A0035712F /* Assets.xcassets */,
 				B752D1CC2296962A0035712F /* LaunchScreen.storyboard */,
@@ -338,7 +354,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F3FBD552298EEBA00E3B97C /* Congfig.plist in Resources */,
 				B752D1CE2296962A0035712F /* LaunchScreen.storyboard in Resources */,
 				6F3FBD5C22993BE800E3B97C /* CodeTableViewCell.xib in Resources */,
 				B752D1CB2296962A0035712F /* Assets.xcassets in Resources */,
@@ -396,7 +411,6 @@
 				6F3FBD5B22993BE800E3B97C /* CodeTableViewCell.m in Sources */,
 				6F3FBD67229A7BAF00E3B97C /* PeripheralSettingViewController.m in Sources */,
 				6F3FBD44229833B400E3B97C /* CenterMachineSettingViewController.m in Sources */,
-				6F3FBD5F22994D1400E3B97C /* CodeInfoTableViewCell.m in Sources */,
 				6F3FBD532298EAE600E3B97C /* ACBScannerCongfig.m in Sources */,
 				B752D1F822969E930035712F /* PeripheralMachineTableViewController.m in Sources */,
 				B752D1C6229696290035712F /* ViewController.m in Sources */,
