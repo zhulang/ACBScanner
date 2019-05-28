@@ -50,7 +50,7 @@
                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2000" minValue="100" maxValue="2000" translatesAutoresizingMaskIntoConstraints="NO" id="3kH-CY-P4l">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2000" minValue="100" maxValue="20000" translatesAutoresizingMaskIntoConstraints="NO" id="3kH-CY-P4l">
                     <rect key="frame" x="30" y="189" width="315" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29" id="zE8-ZC-5bJ"/>

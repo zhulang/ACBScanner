@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ACBScannerCongfig.h"
-#import "MJExtension.h"
+#import "ACBScannerManager.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +16,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    ACBScannerCongfig * config = [ACBScannerCongfig config];
+    ACBScannerManager *manager = [ACBScannerManager manager];
     return YES;
 }
 

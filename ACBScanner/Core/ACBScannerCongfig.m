@@ -7,64 +7,6 @@
 //
 
 #import "ACBScannerCongfig.h"
-#import "MJExtension.h"
-
-@implementation PeripheralCongfig
-
-- (void)setBrightness:(NSNumber *)brightness
-{
-    _brightness = brightness;
-}
-
-- (void)setTorchOn:(NSNumber *)torchOn
-{
-    _torchOn = torchOn;
-}
-
-- (void)setTorchAuto:(NSNumber *)torchAuto
-{
-    _torchAuto = torchAuto;
-}
-
-@end
-
-@implementation CenterCongfig
-
-- (void)setDataUrl:(NSString *)dataUrl
-{
-    _dataUrl = dataUrl;
-}
-
-- (void)setUploadUrl:(NSString *)uploadUrl
-{
-    _uploadUrl = uploadUrl;
-}
-
-- (void)setMaxCacheNumber:(NSNumber *)maxCacheNumber
-{
-    _maxCacheNumber = maxCacheNumber;
-}
-
-- (void)setMaxInterfaceNumber:(NSNumber *)maxInterfaceNumber
-{
-    _maxInterfaceNumber = maxInterfaceNumber;
-}
-
-@end
-
-@implementation ScannerOperator
-
-- (void)setName:(NSString *)name
-{
-    _name = name;
-}
-
-- (void)setNumber:(NSString *)number
-{
-    _number = number;
-}
-
-@end
 
 @implementation ACBScannerCongfig
 
@@ -79,17 +21,18 @@
             if (instance == nil) {
                 instance = [[ACBScannerCongfig alloc] init];
                 PeripheralCongfig * peripheralConfig = [[PeripheralCongfig alloc] init];
-                peripheralConfig.torchOn = @(YES);
-                peripheralConfig.torchAuto = @(NO);
-                peripheralConfig.brightness = @(0.8);
-                peripheralConfig.fps = @(30);
-                peripheralConfig.focusMode = @(0);
+                peripheralConfig.torchOn = YES;
+                peripheralConfig.torchAuto = NO;
+                peripheralConfig.brightness = 0.8;
+                peripheralConfig.fps = 30;
+                peripheralConfig.focusMode = 0;
                 instance.peripheralConfig = peripheralConfig;
                 CenterCongfig * centerConfig = [[CenterCongfig alloc] init];
-                centerConfig.maxInterfaceNumber = @(7);
-                centerConfig.maxCacheNumber = @(2000);
+                centerConfig.maxInterfaceNumber = 7;
+                centerConfig.maxCacheNumber = 2000;
                 centerConfig.uploadUrl = @"";
                 centerConfig.dataUrl = @"";
+                centerConfig.autoUpload = NO;
                 instance.centerConfig = centerConfig;
                 ScannerOperator * people = [[ScannerOperator alloc] init];
                 people.name = @"";
@@ -125,14 +68,14 @@
 + (void)setCenterMaxInterfaceNumber:(NSInteger)number
 {
     if ([ACBScannerCongfig config].centerConfig) {
-        [ACBScannerCongfig config].centerConfig.maxInterfaceNumber = @(number);
+        [ACBScannerCongfig config].centerConfig.maxInterfaceNumber = number;
     }
 }
 
 + (void)setCenterMaxCacheNumber:(NSInteger)number
 {
     if ([ACBScannerCongfig config].centerConfig) {
-        [ACBScannerCongfig config].centerConfig.maxCacheNumber = @(number);
+        [ACBScannerCongfig config].centerConfig.maxCacheNumber = number;
     }
 }
 
@@ -150,38 +93,45 @@
     }
 }
 
++ (void)setCenterAutoUpload:(BOOL)autoUpload
+{
+    if ([ACBScannerCongfig config].centerConfig) {
+        [ACBScannerCongfig config].centerConfig.autoUpload = autoUpload;
+    }
+}
+
 + (void)setPeripheralBrightness:(float)brightness
 {
     if ([ACBScannerCongfig config].peripheralConfig) {
-        [ACBScannerCongfig config].peripheralConfig.brightness = @(brightness);
+        [ACBScannerCongfig config].peripheralConfig.brightness = brightness;
     }
 }
 
 + (void)setPeripheralTorchOn:(BOOL)isOn
 {
     if ([ACBScannerCongfig config].peripheralConfig) {
-        [ACBScannerCongfig config].peripheralConfig.torchOn = @(isOn);
+        [ACBScannerCongfig config].peripheralConfig.torchOn = isOn;
     }
 }
 
 + (void)setPeripheralTorchAuto:(BOOL)isOn
 {
     if ([ACBScannerCongfig config].peripheralConfig) {
-        [ACBScannerCongfig config].peripheralConfig.torchAuto = @(isOn);
+        [ACBScannerCongfig config].peripheralConfig.torchAuto = isOn;
     }
 }
 
 + (void)setPeripheralFps:(float)fps
 {
     if ([ACBScannerCongfig config].peripheralConfig) {
-        [ACBScannerCongfig config].peripheralConfig.fps = @(fps);
+        [ACBScannerCongfig config].peripheralConfig.fps = fps;
     }
 }
 
-+ (void)setPeripheralFocusMode:(NSInteger)focusMode
++ (void)setPeripheralFocusMode:(ACBFocusMode)focusMode
 {
     if ([ACBScannerCongfig config].peripheralConfig) {
-        [ACBScannerCongfig config].peripheralConfig.focusMode = @(focusMode);
+        [ACBScannerCongfig config].peripheralConfig.focusMode = focusMode;
     }
 }
 

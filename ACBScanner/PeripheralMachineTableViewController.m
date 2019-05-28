@@ -10,8 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "PeripheralSettingViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import "ACBScannerCongfig.h"
-#import "MJExtension.h"
+#import "ACBScannerManager.h"
 
 static NSString * SERVICE_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E3";
 static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
@@ -134,12 +133,27 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
     NSError *error = nil;
     BOOL locked = [self.device lockForConfiguration:&error];
     if (locked) {
-        [self.device setFocusMode:[self.config.peripheralConfig.focusMode integerValue]];
+        AVCaptureFocusMode focusMode;
+        switch (self.config.peripheralConfig.focusMode) {
+            case ACBFocusModeLocked:
+                focusMode = AVCaptureFocusModeLocked;
+                break;
+            case ACBFocusModeAutoFocus:
+                focusMode = AVCaptureFocusModeAutoFocus;
+                break;
+            case ACBFocusModeContinuousAutoFocus:
+                focusMode = AVCaptureFocusModeContinuousAutoFocus;
+                break;
+            default:
+                focusMode = AVCaptureFocusModeLocked;
+                break;
+        }
+        [self.device setFocusMode:focusMode];
         [self.device unlockForConfiguration];
     }
     
-    if ([self.config.peripheralConfig.torchOn boolValue]) {
-        if ([self.config.peripheralConfig.torchAuto boolValue]) {
+    if (self.config.peripheralConfig.torchOn) {
+        if (self.config.peripheralConfig.torchAuto) {
             __block CGFloat brightness = 0;
             [self.brightnessVlaueArr enumerateObjectsUsingBlock:^(NSNumber *  _Nonnull num, NSUInteger idx, BOOL * _Nonnull stop) {
                 brightness += [num floatValue];
@@ -168,7 +182,7 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
                 BOOL locked = [self.device lockForConfiguration:&error];
                 if (locked) {
                     [self.device setTorchMode:AVCaptureTorchModeOn];
-                    [self.device setTorchModeOnWithLevel:[self.config.peripheralConfig.brightness floatValue] error:nil];
+                    [self.device setTorchModeOnWithLevel:self.config.peripheralConfig.brightness error:nil];
                     [self.device unlockForConfiguration];
                 }
             }
@@ -232,7 +246,7 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
     NSString * jsonString = [dataDic mj_JSONString];
     if (self.currentCharacteristic) {
         if ([self.peripheralManager updateValue:[jsonString dataUsingEncoding:NSUTF8StringEncoding] forCharacteristic:self.currentCharacteristic onSubscribedCentrals:nil]) {
-            sleep(60.0 / [self.config.peripheralConfig.fps floatValue]);
+            sleep(60.0 / self.config.peripheralConfig.fps);
             [self.session startRunning];
             self.code = nil;
         }

@@ -7,7 +7,7 @@
 //
 
 #import "CenterMachineSettingViewController.h"
-#import "ACBScannerCongfig.h"
+#import "ACBScannerManager.h"
 
 @interface CenterMachineSettingViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *maxConnectLabel;
@@ -27,10 +27,10 @@
     UITapGestureRecognizer * tapView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fieldResignFirstResponder)];
     [self.view addGestureRecognizer:tapView];
     self.config = [ACBScannerCongfig config];
-    self.maxConnectSlider.value = [self.config.centerConfig.maxInterfaceNumber floatValue];
+    self.maxConnectSlider.value = self.config.centerConfig.maxInterfaceNumber;
     self.maxConnectLabel.text = [NSString stringWithFormat:@"最大连接扫描仪个数：%.0f",self.maxConnectSlider.value];
     
-    self.maxCacheSlider.value = [self.config.centerConfig.maxCacheNumber floatValue];
+    self.maxCacheSlider.value = self.config.centerConfig.maxCacheNumber;
     self.maxCacheLabel.text = [NSString stringWithFormat:@"最大缓存记录条数：%.0f",self.maxCacheSlider.value];
     
     self.uploadUrltextField.text = self.config.centerConfig.uploadUrl;
@@ -42,13 +42,13 @@
 
 - (IBAction)maxConnectDidChange:(UISlider *)sender {
     self.maxConnectLabel.text = [NSString stringWithFormat:@"最大连接扫描仪个数：%.0f",self.maxConnectSlider.value];
-    self.config.centerConfig.maxInterfaceNumber = [NSNumber numberWithFloat:sender.value];
+    self.config.centerConfig.maxInterfaceNumber = sender.value;
     [ACBScannerCongfig archiver:self.config];
 }
 
 - (IBAction)maxCacheDidChange:(UISlider *)sender {
     self.maxCacheLabel.text = [NSString stringWithFormat:@"最大缓存记录条数：%.0f",sender.value];
-    self.config.centerConfig.maxCacheNumber = [NSNumber numberWithFloat:sender.value];
+    self.config.centerConfig.maxCacheNumber = sender.value;
     [ACBScannerCongfig archiver:self.config];
 }
 

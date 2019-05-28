@@ -94,7 +94,7 @@
                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="1" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="oTx-WP-aZL">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="1" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="oTx-WP-aZL">
                     <rect key="frame" x="30" y="358" width="315" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="44D-g4-uCp"/>

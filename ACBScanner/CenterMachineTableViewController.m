@@ -10,8 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "CenterMachineSettingViewController.h"
 #import "CodeTableViewCell.h"
-#import "ACBScannerCongfig.h"
-#import "MJExtension.h"
+#import "ACBScannerManager.h"
 
 static NSString * SERVICE_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E3";
 static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
@@ -43,7 +42,7 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
     self.navigationItem.title = @"中心设备";
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)],[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(uploadData)]];
         [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CodeTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([CodeTableViewCell class])];
-    self.peripheralArr = [NSMutableArray arrayWithCapacity:[self.config.centerConfig.maxInterfaceNumber integerValue]];
+    self.peripheralArr = [NSMutableArray arrayWithCapacity:self.config.centerConfig.maxInterfaceNumber];
     self.peripheralUUIDSet = [NSMutableSet set];
     self.resultData = [NSMutableArray array];
     self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
@@ -123,7 +122,7 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
     if (![self.peripheralUUIDSet containsObject:uuid]) {
         @synchronized (self.peripheralUUIDSet) {
             [self.peripheralUUIDSet addObject:uuid];
-            if (self.peripheralArr && self.peripheralArr.count < [self.config.centerConfig.maxInterfaceNumber integerValue]) {
+            if (self.peripheralArr && self.peripheralArr.count < self.config.centerConfig.maxInterfaceNumber) {
                 [self.peripheralArr addObject:peripheral];
                 [self.manager connectPeripheral:peripheral options:nil];
             }

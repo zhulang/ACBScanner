@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "CenterMachineTableViewController.h"
 #import "PeripheralMachineTableViewController.h"
-#import "ACBScannerCongfig.h"
+#import "ACBScannerManager.h"
 
 @interface ViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textField;

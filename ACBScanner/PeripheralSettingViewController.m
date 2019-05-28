@@ -7,7 +7,8 @@
 //
 
 #import "PeripheralSettingViewController.h"
-#import "ACBScannerCongfig.h"
+#import "ACBScannerManager.h"
+
 @interface PeripheralSettingViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *torchLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *torchSwitch;
@@ -27,16 +28,16 @@
     [super viewDidLoad];
     self.navigationItem.title = @"扫描仪参数设置";
     self.config = [ACBScannerCongfig config];
-    self.lightBrightnessSlider.value = [self.config.peripheralConfig.brightness floatValue];
+    self.lightBrightnessSlider.value = self.config.peripheralConfig.brightness;
     self.lightBrightnessLabel.text = [NSString stringWithFormat:@"手动调节补光亮度：%.2f",self.lightBrightnessSlider.value];
-    self.torchSwitch.on = [self.config.peripheralConfig.torchOn boolValue];
+    self.torchSwitch.on = self.config.peripheralConfig.torchOn;
     self.torchLabel.text = [NSString stringWithFormat:@"补光：%@",self.torchSwitch.on ? @"开" : @"关"];
-    self.torchAutoSwitch.on = [self.config.peripheralConfig.torchAuto boolValue] && self.torchSwitch.on;
+    self.torchAutoSwitch.on = self.config.peripheralConfig.torchAuto && self.torchSwitch.on;
     self.torchAutoSwitch.enabled = self.torchSwitch.on;
     self.torchAutoLabel.text = [NSString stringWithFormat:@"自动调节补光亮度：%@",self.torchAutoSwitch.on ? @"开" : @"关"];
-    self.fpsSlider.value = [self.config.peripheralConfig.fps floatValue];
+    self.fpsSlider.value = self.config.peripheralConfig.fps;
     self.fpsLabel.text = [NSString stringWithFormat:@"每分钟扫描次数：%.0f",self.fpsSlider.value];
-    self.focusModeSegmentedControl.selectedSegmentIndex = [self.config.peripheralConfig.focusMode integerValue];
+    self.focusModeSegmentedControl.selectedSegmentIndex = self.config.peripheralConfig.focusMode;
 }
 
 - (IBAction)torchSwitchValueDidChange:(UISwitch *)sender {
@@ -60,19 +61,19 @@
 
 - (IBAction)lightBrightnessDidChange:(UISlider *)sender {
     
-    self.config.peripheralConfig.brightness = @(sender.value);
+    self.config.peripheralConfig.brightness = sender.value;
     self.lightBrightnessLabel.text = [NSString stringWithFormat:@"手动调节补光亮度：%.2f",self.lightBrightnessSlider.value];
     [ACBScannerCongfig archiver:self.config];
 }
 
 - (IBAction)fpsSliderValueDidChange:(UISlider *)sender {
-    self.config.peripheralConfig.fps = @(sender.value);
+    self.config.peripheralConfig.fps = sender.value;
     self.fpsLabel.text = [NSString stringWithFormat:@"手动调节补光亮度：%.2f",self.fpsSlider.value];
     [ACBScannerCongfig archiver:self.config];
 }
 
 - (IBAction)focusValueDidChange:(UISegmentedControl *)sender {
-    self.config.peripheralConfig.focusMode = @(sender.selectedSegmentIndex);
+    self.config.peripheralConfig.focusMode = sender.selectedSegmentIndex;
     [ACBScannerCongfig archiver:self.config];
 }
 
