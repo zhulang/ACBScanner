@@ -15,12 +15,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ACBScannerPeripheralDelegate <NSObject>
 
+/**
+ @ 附设设备发送数据后的回调
+ @  status, YES (send data successful)
+ */
+- (void)peripheralDidSendJsonString:(NSString *)jsonString status:(BOOL)status;
+
+/**
+ @ 附设设备barcode失败回调方法
+ */
+- (void)peripheralRecogniseDidFail:(NSString *)errorDescription;
+
+/**
+ @ 附设停止扫描后回调的回调方法
+ */
+- (void)peripheralDidStopScanning;
+
+/**
+ @ 调用附设启动扫描后回调此方法
+ */
+- (void)peripheralDidStartScanning;
 
 @end
 
 @protocol ACBScannerCenterMachineDelegate <NSObject>
 
-
+/**
+ @ 成功写入值之后中心设备回调
+ */
+- (void)centerPeripheralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
 @end
 
 
