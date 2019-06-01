@@ -23,6 +23,7 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
 @property (nonatomic,strong) CBCentral * central;
 @property (nonatomic,strong) CBPeripheralManager * peripheralManager;
 @property (nonatomic,strong) CBUUID * myCubbid;
+@property (nonatomic,strong) UIView * preview;
 @property (nonatomic,copy) NSString * code;
 @property (nonatomic,strong) NSMutableArray * brightnessVlaueArr;
 @property (nonatomic,strong) AVCaptureDevice * device;
@@ -54,7 +55,7 @@ static dispatch_once_t onceToken;
 }
 
 #pragma mark - peripheral device methods
-- (void)scanning
+- (void)beginScanningBarCode
 {
     if (self.serviceName == nil || self.peripheralDelegate == nil) {
         return;
@@ -66,7 +67,7 @@ static dispatch_once_t onceToken;
     }
 }
 
-- (void)stopScanning
+- (void)stopScanningBarCode
 {
     [self.session stopRunning];
     if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralDidStopScanning)]) {
@@ -79,7 +80,15 @@ static dispatch_once_t onceToken;
     self.serviceName = serviceName;
     self.peripheralDelegate = viewController;
     self.previewLayerFrame = previewLayerFrame;
-    [self scanning];
+    [self beginScanningBarCode];
+}
+
+- (void)initPeripheralWithServiceName:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame
+{
+    self.serviceName = serviceName;
+    self.peripheralDelegate = viewController;
+    self.preview = preview;
+    self.previewLayerFrame = previewLayerFrame;
 }
 
 - (AVCaptureSession *)session
@@ -425,6 +434,55 @@ static dispatch_once_t onceToken;
     NSLog(@"数据写入成功！");
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #pragma mark - setter methods
 + (void)setCenterMaxInterfaceNumber:(NSInteger)number
 {
@@ -435,8 +493,8 @@ static dispatch_once_t onceToken;
             number = 7;
         }
         manager.scannerConfig.centerConfig.maxInterfaceNumber = number;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setCenterMaxCacheNumber:(NSInteger)number
@@ -448,32 +506,32 @@ static dispatch_once_t onceToken;
             number = 20000;
         }
         manager.scannerConfig.centerConfig.maxCacheNumber = number;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setCenterUploadUrl:(NSString *)uploadUrl
 {
     if (uploadUrl && manager.scannerConfig.centerConfig) {
         manager.scannerConfig.centerConfig.uploadUrl = uploadUrl;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setCenterDataUrl:(NSString *)dataUrl
 {
     if (dataUrl && manager.scannerConfig.centerConfig) {
         manager.scannerConfig.centerConfig.dataUrl = dataUrl;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setCenterAutoUpload:(BOOL)autoUpload
 {
     if (manager.scannerConfig.centerConfig) {
         manager.scannerConfig.centerConfig.autoUpload = autoUpload;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setPeripheralBrightness:(float)brightness
@@ -485,24 +543,24 @@ static dispatch_once_t onceToken;
             brightness = 1;
         }
         manager.scannerConfig.peripheralConfig.brightness = brightness;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setPeripheralTorchOn:(BOOL)isOn
 {
     if (manager.scannerConfig.peripheralConfig) {
         manager.scannerConfig.peripheralConfig.torchOn = isOn;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setPeripheralTorchAuto:(BOOL)isOn
 {
     if (manager.scannerConfig.peripheralConfig) {
         manager.scannerConfig.peripheralConfig.torchAuto = isOn;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setPeripheralFps:(float)fps
@@ -514,8 +572,8 @@ static dispatch_once_t onceToken;
             fps = 50;
         }
         manager.scannerConfig.peripheralConfig.fps = fps;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setPeripheralFocusMode:(ACBFocusMode)focusMode
@@ -525,24 +583,84 @@ static dispatch_once_t onceToken;
             return;
         }
         manager.scannerConfig.peripheralConfig.focusMode = focusMode;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setOperatorName:(NSString *)name
 {
     if (name && manager.scannerConfig.worker) {
         manager.scannerConfig.worker.name = name;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
 }
 
 + (void)setOperatorNumber:(NSString *)numStr
 {
     if (numStr && manager.scannerConfig.worker) {
         manager.scannerConfig.worker.number = numStr;
-        [ACBScannerCongfig archiver];
     }
+    [ACBScannerCongfig archiver];
+}
+
+- (void)setMaxInterfaceNumber:(NSInteger)maxInterfaceNumber
+{
+    [ACBScannerManager setCenterMaxInterfaceNumber:maxInterfaceNumber];
+}
+
+- (void)setMaxCacheNumber:(NSInteger)maxCacheNumber
+{
+    [ACBScannerManager setCenterMaxCacheNumber:maxCacheNumber];
+}
+
+- (void)setUploadUrl:(NSString *)uploadUrl
+{
+    [ACBScannerManager setCenterUploadUrl:uploadUrl];
+}
+
+- (void)setDataUrl:(NSString *)dataUrl
+{
+    [ACBScannerManager setCenterDataUrl:dataUrl];
+}
+
+- (void)setAutoUpload:(BOOL)autoUpload
+{
+    [ACBScannerManager setCenterAutoUpload:autoUpload];
+}
+
+- (void)setBrightness:(float)brightness
+{
+    [ACBScannerManager setPeripheralBrightness:brightness];
+}
+
+- (void)setTorchOn:(BOOL)torchOn
+{
+    [ACBScannerManager setPeripheralTorchOn:torchOn];
+}
+
+- (void)setTorchAuto:(BOOL)torchAuto
+{
+    [ACBScannerManager setPeripheralTorchAuto:torchAuto];
+}
+
+- (void)setFps:(float)fps
+{
+    [ACBScannerManager setPeripheralFps:fps];
+}
+
+- (void)setFocusMode:(ACBFocusMode)focusMode
+{
+    [ACBScannerManager setPeripheralFocusMode:focusMode];
+}
+
+- (void)setOperatorName:(NSString *)operatorName
+{
+    [ACBScannerManager setOperatorName:operatorName];
+}
+
+- (void)setOperatorNumber:(NSString *)operatorNumber
+{
+    [ACBScannerManager setOperatorNumber:operatorNumber];
 }
 
 #pragma mark - getter methods

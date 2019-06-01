@@ -7,7 +7,18 @@
 //
 
 #import "ScannerOperator.h"
+#import "ACBScannerCongfig.h"
 
 @implementation ScannerOperator
+
+- (void)setName:(NSString *)name
+{
+    _name = name;
+}
+
+- (void)setNumber:(NSString *)number
+{
+    _number = number;
+}
 
 @end

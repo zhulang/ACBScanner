@@ -65,4 +65,8 @@
     
 }
 
+- (void)peripheralDidSendJsonString:(nonnull NSString *)jsonString status:(BOOL)status {
+    
+}
+
 @end

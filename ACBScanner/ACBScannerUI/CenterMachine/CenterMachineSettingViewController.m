@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UISlider *maxCacheSlider;
 @property (weak, nonatomic) IBOutlet UITextField *uploadUrltextField;
 @property (weak, nonatomic) IBOutlet UITextField *dataUrltextField;
-@property (nonatomic, strong)ACBScannerCongfig * config;
 @end
 
 @implementation CenterMachineSettingViewController
@@ -26,15 +25,14 @@
     self.navigationItem.title = @"中心设备参数设置";
     UITapGestureRecognizer * tapView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fieldResignFirstResponder)];
     [self.view addGestureRecognizer:tapView];
-    self.config = [ACBScannerCongfig config];
-    self.maxConnectSlider.value = self.config.centerConfig.maxInterfaceNumber;
+    self.maxConnectSlider.value = [ACBScannerManager manager].maxInterfaceNumber;
     self.maxConnectLabel.text = [NSString stringWithFormat:@"最大连接扫描仪个数：%.0f",self.maxConnectSlider.value];
     
-    self.maxCacheSlider.value = self.config.centerConfig.maxCacheNumber;
+    self.maxCacheSlider.value = [ACBScannerManager manager].maxCacheNumber;
     self.maxCacheLabel.text = [NSString stringWithFormat:@"最大缓存记录条数：%.0f",self.maxCacheSlider.value];
     
-    self.uploadUrltextField.text = self.config.centerConfig.uploadUrl;
-    self.dataUrltextField.text = self.config.centerConfig.dataUrl;
+    self.uploadUrltextField.text = [ACBScannerManager manager].uploadUrl;
+    self.dataUrltextField.text = [ACBScannerManager manager].dataUrl;
     
     self.uploadUrltextField.delegate = self;
     self.dataUrltextField.delegate = self;
@@ -42,26 +40,22 @@
 
 - (IBAction)maxConnectDidChange:(UISlider *)sender {
     self.maxConnectLabel.text = [NSString stringWithFormat:@"最大连接扫描仪个数：%.0f",self.maxConnectSlider.value];
-    self.config.centerConfig.maxInterfaceNumber = sender.value;
-    [ACBScannerCongfig archiver:self.config];
+    [ACBScannerManager manager].maxInterfaceNumber = sender.value;
 }
 
 - (IBAction)maxCacheDidChange:(UISlider *)sender {
     self.maxCacheLabel.text = [NSString stringWithFormat:@"最大缓存记录条数：%.0f",sender.value];
-    self.config.centerConfig.maxCacheNumber = sender.value;
-    [ACBScannerCongfig archiver:self.config];
+    [ACBScannerManager manager].maxCacheNumber = sender.value;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString * str = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if ([textField isEqual:self.dataUrltextField]) {
-        self.config.centerConfig.dataUrl = str;
-        [ACBScannerCongfig archiver:self.config];
+        [ACBScannerManager manager].dataUrl = str;
     }
     if ([textField isEqual:self.uploadUrltextField]) {
-        self.config.centerConfig.uploadUrl = str;
-        [ACBScannerCongfig archiver:self.config];
+        [ACBScannerManager manager].uploadUrl = str;
     }
     return YES;
 }
@@ -86,6 +80,5 @@
         
     }];
 }
-
 
 @end

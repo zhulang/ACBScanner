@@ -7,7 +7,33 @@
 //
 
 #import "CenterCongfig.h"
+#import "ACBScannerCongfig.h"
 
 @implementation CenterCongfig
+
+- (void)setMaxInterfaceNumber:(NSInteger)maxInterfaceNumber
+{
+    _maxInterfaceNumber = maxInterfaceNumber;
+}
+
+- (void)setMaxCacheNumber:(NSInteger)maxCacheNumber
+{
+    _maxCacheNumber = maxCacheNumber;
+}
+
+- (void)setUploadUrl:(NSString *)uploadUrl
+{
+    _uploadUrl = uploadUrl;
+}
+
+- (void)setDataUrl:(NSString *)dataUrl
+{
+    _dataUrl = dataUrl;
+}
+
+- (void)setAutoUpload:(BOOL)autoUpload
+{
+    _autoUpload = autoUpload;
+}
 
 @end

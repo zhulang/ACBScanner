@@ -44,16 +44,17 @@ NS_ASSUME_NONNULL_BEGIN
  @ 成功写入值之后中心设备回调
  */
 - (void)centerPeripheralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
+
 @end
 
 
 @interface ACBScannerManager : NSObject
 
-- (void)scanning;
+- (void)beginScanningBarCode;
 
-- (void)stopScanning;
+- (void)stopScanningBarCode;
 
-- (void)scanning:(NSString *)serviceName peripheralDelegate:(id<ACBScannerPeripheralDelegate>)viewController previewLayerFrame:(CGRect)previewLayerFrame;
+- (void)initPeripheralWithServiceName:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame;
 
 @property (nonatomic,assign) CGRect previewLayerFrame;
 
