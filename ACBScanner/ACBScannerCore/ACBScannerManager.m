@@ -375,7 +375,9 @@ static dispatch_once_t onceToken;
             [self.peripheralUUIDSet addObject:uuid];
             if (self.peripheralArr && self.peripheralArr.count < [ACBScannerManager getCenterMaxInterfaceNumber]) {
                 [self.peripheralArr addObject:peripheral];
-                // - (void) centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr;
+                if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheralsUpdate:)]) {
+                    [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
+                }
                 [self.manager connectPeripheral:peripheral options:nil];
             }
         }
@@ -401,7 +403,9 @@ static dispatch_once_t onceToken;
         NSString * serviceUuid = service.UUID.UUIDString;
         if ([serviceUuid isEqualToString:SERVICE_UUID]) {
             [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:CHARACTERISTIC_UUID]] forService:service];
-           // - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
+            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverServices:)]) {
+                [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverServices:error];
+            }
         }
     }
 }
@@ -417,7 +421,9 @@ static dispatch_once_t onceToken;
             [peripheral readValueForCharacteristic:characteristic];
             [peripheral setNotifyValue:YES forCharacteristic:characteristic];
             [peripheral discoverDescriptorsForCharacteristic:characteristic];
-            // - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error
+            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverCharacteristicsForService:error:)]) {
+                [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverCharacteristicsForService:service error:error];
+            }
         }
     }
 }
@@ -442,8 +448,8 @@ static dispatch_once_t onceToken;
     if (value) {
         @synchronized (self.resultData) {
             [self.resultData insertObject:value atIndex:0];
-            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centerPeripheralDidReadValueForCharacteristic:currentRecord:)]) {
-                [self.centerMachineDelegate centerPeripheralDidReadValueForCharacteristic:self.resultData currentRecord:value];
+            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:currentRecord:)]) {
+                [self.centerMachineDelegate centralDidReadValueForCharacteristic:self.resultData currentRecord:value];
             }
         }
     }
@@ -464,7 +470,9 @@ static dispatch_once_t onceToken;
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
     NSLog(@"数据写入成功！");
-    // - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error;
+    if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didWriteValueForCharacteristic:error:)]) {
+        [self.centerMachineDelegate centralForPeripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+    }
 }
 
 

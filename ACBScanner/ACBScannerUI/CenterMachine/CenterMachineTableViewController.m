@@ -7,21 +7,14 @@
 //
 
 #import "CenterMachineTableViewController.h"
-#import <CoreBluetooth/CoreBluetooth.h>
 #import "CenterMachineSettingViewController.h"
 #import "CodeTableViewCell.h"
 #import "ACBScannerManager.h"
 
-static NSString * SERVICE_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E3";
-static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
-
-@interface CenterMachineTableViewController ()<CBCentralManagerDelegate,CBPeripheralDelegate,ACBScannerCenterMachineDelegate>
+@interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate>
 @property (nonatomic,copy) NSString * serviceName;
-@property (nonatomic,strong) CBCentralManager * manager;
 @property (nonatomic,strong) NSMutableArray * peripheralArr;
-@property (nonatomic,strong) NSMutableSet * peripheralUUIDSet;
 @property (nonatomic,strong) NSMutableArray * resultData;
-@property (nonatomic,strong) CBCharacteristic * currentCharacteristic;
 @end
 
 @implementation CenterMachineTableViewController
@@ -40,173 +33,18 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
     [ACBScannerManager manager].centerMachineDelegate = self;
     self.navigationItem.title = @"中心设备";
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)],[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(uploadData)]];
-        [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CodeTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([CodeTableViewCell class])];
-    self.peripheralArr = [NSMutableArray arrayWithCapacity:[ACBScannerManager getCenterMaxInterfaceNumber]];
-    self.peripheralUUIDSet = [NSMutableSet set];
     self.resultData = [NSMutableArray array];
-    self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
     self.tableView.tableFooterView = [[UIView alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearCacheData:) name:@"clear.cache.data" object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"clear.cache.data" object:nil];
-}
-
-- (void)clearCacheData:(NSNotification *)noti
-{
-    BOOL clear = [noti.object boolValue];
-    if (clear) {
-        @synchronized (self.resultData) {
-            [self.resultData removeAllObjects];
-        }
-        [self.tableView reloadData];
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self resetData];
-}
-
-- (void)resetData
-{
-    [self.peripheralArr enumerateObjectsUsingBlock:^(CBPeripheral *  _Nonnull peripheral, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.manager cancelPeripheralConnection:peripheral];
-    }];
-}
-
-- (void)uploadData
-{
-    @synchronized (self.resultData) {
-        [self.resultData removeAllObjects];
-    }
-    [self.tableView reloadData];
 }
 
 - (void)setting
 {
-    CenterMachineSettingViewController * vc = [CenterMachineSettingViewController new];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController pushViewController:[CenterMachineSettingViewController new] animated:YES];
 }
 
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central
+- (void)uploadData
 {
-    switch (central.state) {
-        case CBManagerStateUnknown:
-            NSLog(@">>CBManagerStateUnknown");
-            break;
-        case CBManagerStateResetting:
-            NSLog(@">>CBManagerStateResetting");
-            break;
-        case CBManagerStateUnsupported:
-            NSLog(@">>CBManagerStateUnsupported");
-            break;
-        case CBManagerStateUnauthorized:
-            NSLog(@">>CBManagerStateUnauthorized");
-            break;
-        case CBManagerStatePoweredOff:
-            NSLog(@">>CBManagerStatePoweredOff");
-            break;
-        case CBManagerStatePoweredOn:
-            [self.manager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]] options:nil];
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI
-{
-    NSString * uuid = peripheral.identifier.UUIDString;
-    if (![self.peripheralUUIDSet containsObject:uuid]) {
-        @synchronized (self.peripheralUUIDSet) {
-            [self.peripheralUUIDSet addObject:uuid];
-            if (self.peripheralArr && self.peripheralArr.count < [ACBScannerManager getCenterMaxInterfaceNumber]) {
-                [self.peripheralArr addObject:peripheral];
-                [self.manager connectPeripheral:peripheral options:nil];
-            }
-        }
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
-{
-    peripheral.delegate = self;
-    [peripheral discoverServices:@[[CBUUID UUIDWithString:SERVICE_UUID]]];
-}
-
-#pragma mark - CBPeripheralDelegate methods
-- (void)peripheral:(CBPeripheral *)peripheral didModifyServices:(NSArray<CBService *> *)invalidatedServices
-{
-    
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
-{
-    for (CBService * service in peripheral.services)
-    {
-        NSString * serviceUuid = service.UUID.UUIDString;
-        if ([serviceUuid isEqualToString:SERVICE_UUID]) {
-            [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:CHARACTERISTIC_UUID]] forService:service];
-        }
-    }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error
-{
-    for (CBCharacteristic * characteristic in service.characteristics)
-    {
-        NSString * characteristicUuid = characteristic.UUID.UUIDString;
-        if ([characteristicUuid isEqualToString:CHARACTERISTIC_UUID])
-        {
-            self.currentCharacteristic = characteristic;
-            [peripheral readValueForCharacteristic:characteristic];
-            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-            [peripheral discoverDescriptorsForCharacteristic:characteristic];
-            [self.tableView reloadData];
-        }
-    }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    
-}
-
-#pragma mark - 获取值
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    if (characteristic.value == nil || self.serviceName == nil) {
-        return;
-    }
-    NSString * str  =[[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
-    NSDictionary * dic = [str mj_JSONObject];
-    if (dic == nil) {
-        return;
-    }
-    NSDictionary * value = dic[self.serviceName];
-    if (value) {
-        @synchronized (self.resultData) {
-            [self.resultData insertObject:value atIndex:0];
-            [self.tableView reloadData];
-        }
-    }
-}
-
-#pragma mark - 中心读取外设实时数据
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    if (characteristic.isNotifying) {
-        [peripheral readValueForCharacteristic:characteristic];
-    } else {
-        [self.manager cancelPeripheralConnection:peripheral];
-    }
-}
-
-#pragma mark 数据写入成功回调
-- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
-{
-    NSLog(@"数据写入成功！");
+    [self.navigationController pushViewController:[CenterMachineSettingViewController new] animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -306,6 +144,37 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - ACBScannerCenterMachineDelegate methods
+- (void)centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids
+{
+    
+}
+
+- (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr
+{
+    
+}
+
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
+{
+    
+}
+
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error
+{
+    
+}
+
+- (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value
+{
+    
+}
+
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
+{
+    
 }
 
 @end

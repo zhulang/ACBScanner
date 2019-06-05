@@ -41,20 +41,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ACBScannerCenterMachineDelegate <NSObject>
 
-/**
- @ 成功写入值之后中心设备回调
- */
-- (void)centerPeripheralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
+//开始扫描外设
+- (void)centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids;
 
- - (void) centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids;
+//外设更新后回调
+- (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr;
 
- - (void) centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr;
+//发现服务后回调
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error;
 
- - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error;
+//发现characteristics后回调
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error;
 
- - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error;
+//成功读取值之后中心设备回调
+- (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
 
- - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error;
+//成功写入值之后中心设备回调
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error;
 
 @end
 
