@@ -13,8 +13,8 @@
 
 @interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate>
 @property (nonatomic,copy) NSString * serviceName;
-@property (nonatomic,strong) NSMutableArray * peripheralArr;
-@property (nonatomic,strong) NSMutableArray * resultData;
+@property (nonatomic,strong) NSArray * peripheralArr;
+@property (nonatomic,strong) NSArray * resultData;
 @end
 
 @implementation CenterMachineTableViewController
@@ -154,7 +154,8 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 
 - (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr
 {
-    
+    self.peripheralArr = peripheralArr;
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
@@ -169,7 +170,8 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 
 - (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value
 {
-    
+    self.resultData = resultData;
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
