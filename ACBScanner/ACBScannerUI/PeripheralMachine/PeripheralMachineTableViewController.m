@@ -29,12 +29,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [ACBScannerManager manager].peripheralDelegate = self;
-    CGFloat w = [UIScreen mainScreen].bounds.size.width;
-    CGFloat h = [UIScreen mainScreen].bounds.size.height;
-    [ACBScannerManager manager].previewLayerFrame = CGRectMake(0, 0, w, h);
     self.navigationItem.title = @"扫描仪";
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)]];
+    
+    CGFloat w = [UIScreen mainScreen].bounds.size.width;
+    CGFloat h = [UIScreen mainScreen].bounds.size.height;
+    [[ACBScannerManager manager] initPeripheralManager:self.serviceName delegate:self preview:self.view previewLayerFrame:CGRectMake(0, 0, w, h)];
 }
 
 - (void)setting
@@ -47,26 +47,30 @@
 #pragma mark - ACBScannerPeripheralDelegate methods
 - (void)peripheralDidSendData:(NSDictionary *)dataDic status:(BOOL)status;
 {
-    
+    NSLog(@"peripheralDidSendData - %@",dataDic);
 }
 
 - (void)peripheralRecogniseDidFail:(NSString *)errorDescription
 {
-    
+    NSLog(@"%@",errorDescription);
 }
 
 - (void)peripheralDidStopScanning
 {
-    
+    NSLog(@"已停止扫描");
 }
 
 - (void)peripheralDidStartScanning
 {
-    
+    NSLog(@"已开始扫描");
 }
 
 - (void)peripheralDidSendJsonString:(nonnull NSString *)jsonString status:(BOOL)status {
-    
+    if (status == NO) {
+        NSLog(@"数据已发出，中心设备没有接收成功");
+    }else{
+        NSLog(@"中心设备已成功接收成功");
+    }
 }
 
 @end

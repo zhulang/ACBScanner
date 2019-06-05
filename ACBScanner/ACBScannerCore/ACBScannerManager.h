@@ -10,6 +10,7 @@
 #import "ACBScannerCongfig.h"
 #import "MJExtension.h"
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,23 +46,50 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)centerPeripheralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
 
+ - (void) centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids;
+
+ - (void) centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr;
+
+ - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error;
+
+ - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error;
+
+ - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error;
+
 @end
 
 
 @interface ACBScannerManager : NSObject
 
-- (void)beginScanningBarCode;
+//开始扫描条码或二维码
+- (void)beginScanningBarCode:(BOOL)resetTorch;
 
+//停止扫描条码或二维码
 - (void)stopScanningBarCode;
 
-- (void)initPeripheralWithServiceName:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame;
+/**
+ @ serviceName，服务名称
+ @ viewController，附设代理
+ @ preview，扫描区域载体
+ @ previewLayerFrame，扫描区域位置
+ */
+- (void)initPeripheralManager:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame;
+
+/**
+ @ serviceName，服务名称
+ @ viewController，中设代理
+ */
+- (void)initCenterMachineManager:(NSString *)serviceName delegate:(id<ACBScannerCenterMachineDelegate>)viewController;
 
 @property (nonatomic,assign) CGRect previewLayerFrame;
 
+//服务名称
 @property (nonatomic,copy) NSString * serviceName;
 
+//附设代理
 @property (nonatomic,weak) id<ACBScannerPeripheralDelegate> peripheralDelegate;
 
+//中设代理
 @property (nonatomic,weak) id<ACBScannerCenterMachineDelegate> centerMachineDelegate;
 
 + (instancetype)manager;
@@ -153,18 +181,72 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setOperatorNumber:(NSString *)numStr;
 + (NSString *)getOperatorNumber;
 
-// 具体参数请参阅getter methods和 setter methods说明
+/**
+ @ the max value of center machine connects
+ @ 中心设备连接数
+ */
 @property (nonatomic, assign) NSInteger maxInterfaceNumber;
+
+/**
+ @ cache data max number
+ @ 最大缓存条数
+ */
 @property (nonatomic, assign) NSInteger maxCacheNumber;
+
+/**
+ @ webservice url address
+ @ 缓存数据传地址
+ */
 @property (nonatomic, copy) NSString * uploadUrl;
+
+/**
+ @ webservice url address.
+ @ 上传数据后查看地址
+ */
 @property (nonatomic, copy) NSString * dataUrl;
+
+/**
+ @ if set the value NO,the data will saved to you local device
+ @ 中心设备是否在收到数据时自动将数据上传
+ */
 @property (nonatomic, assign) BOOL autoUpload;
+
+/**
+ @ brightness
+ @ 设置补光亮度
+ */
 @property (nonatomic, assign) float brightness;
+
+/**
+ @ if set the value NO,the light will close,default is YES
+ @ 是否开启补光
+ */
 @property (nonatomic, assign) BOOL torchOn;
+
+/**
+ @ torchAuto is enable when set torchOn is YES,default is NO
+ @ 扫描仪是否自动调节补光亮度。只有在补光开启后设置才有效
+ */
 @property (nonatomic, assign) BOOL torchAuto;
+
+/**
+ @ MAX value scanning times in 1 min. the value between 1 to 50 ,default is 40
+ @ 每条扫描的最大记录条数
+ */
 @property (nonatomic, assign) float fps;
+
+/**
+  @ ACCaptureFocusMode ,default is ACCaptureFocusModeLocked
+  @ 扫描仪是否需要自动对焦
+  */
 @property (nonatomic, assign) ACBFocusMode focusMode;
+
+// operator's name ,recommends not to set it too long
+// 操作者名称
 @property (nonatomic, copy) NSString * operatorName;
+
+// operator's worknumber,recommends not to set it too long
+// 设置操作者工号
 @property (nonatomic, copy) NSString * operatorNumber;
 
 // save the data of the center device
