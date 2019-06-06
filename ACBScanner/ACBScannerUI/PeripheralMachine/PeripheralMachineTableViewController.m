@@ -29,7 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"扫描仪";
-    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -44,12 +43,6 @@
     [super viewDidDisappear:animated];
     [[ACBScannerManager manager] stopScanningBarCode];
 }
-
-- (void)setting
-{
-    
-}
-
 
 #pragma mark - ACBScannerPeripheralDelegate methods
 - (void)peripheralDidSendData:(NSDictionary *)dataDic status:(BOOL)status;

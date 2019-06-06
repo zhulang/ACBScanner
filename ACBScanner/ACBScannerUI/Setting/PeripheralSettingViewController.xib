@@ -30,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="补光" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j55-vq-cRx">
-                    <rect key="frame" x="32" y="80" width="31" height="18"/>
+                    <rect key="frame" x="32" y="130" width="31" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="D9V-6q-65I"/>
                     </constraints>
@@ -39,7 +39,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuB-3d-ne8">
-                    <rect key="frame" x="32" y="106" width="49" height="31"/>
+                    <rect key="frame" x="32" y="156" width="49" height="31"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="47" id="gMb-te-R7y"/>
                         <constraint firstAttribute="height" constant="31" id="ngG-zv-N07"/>
@@ -49,7 +49,7 @@
                     </connections>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自动调节补光亮度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zn5-D8-Ipr">
-                    <rect key="frame" x="32" y="165" width="122.5" height="18"/>
+                    <rect key="frame" x="32" y="215" width="122.5" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="R9N-zu-PRi"/>
                     </constraints>
@@ -58,7 +58,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手动调节补光亮度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mt-YG-X6I">
-                    <rect key="frame" x="32" y="250" width="123" height="18"/>
+                    <rect key="frame" x="32" y="300" width="123" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="yg4-pv-i7i"/>
                     </constraints>
@@ -67,7 +67,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNb-dG-Y5k">
-                    <rect key="frame" x="32" y="191" width="49" height="31"/>
+                    <rect key="frame" x="32" y="241" width="49" height="31"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="47" id="QuY-js-B0F"/>
                         <constraint firstAttribute="height" constant="31" id="gPd-6i-Ad4"/>
@@ -77,7 +77,7 @@
                     </connections>
                 </switch>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.01" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PrG-vd-imo">
-                    <rect key="frame" x="30" y="276" width="315" height="29"/>
+                    <rect key="frame" x="30" y="326" width="315" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="Qtl-KY-QDg"/>
                     </constraints>
@@ -86,7 +86,7 @@
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每分钟扫描次数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-9A-fGn">
-                    <rect key="frame" x="32" y="332" width="107.5" height="18"/>
+                    <rect key="frame" x="32" y="382" width="107.5" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="ayY-xW-fx4"/>
                     </constraints>
@@ -95,7 +95,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="1" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="oTx-WP-aZL">
-                    <rect key="frame" x="30" y="358" width="315" height="29"/>
+                    <rect key="frame" x="30" y="408" width="315" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="44D-g4-uCp"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="ACO-8W-5O5"/>
@@ -106,7 +106,7 @@
                     </connections>
                 </slider>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="对焦模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Khc-l0-DEe">
-                    <rect key="frame" x="32" y="414" width="61.5" height="18"/>
+                    <rect key="frame" x="32" y="48" width="61.5" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="Kgd-Mu-0CM"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="NT1-0q-qRT"/>
@@ -116,7 +116,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rhL-Ns-HL2">
-                    <rect key="frame" x="32" y="440" width="284" height="29"/>
+                    <rect key="frame" x="32" y="74" width="284" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="7LN-j6-Wqq"/>
                     </constraints>
@@ -136,16 +136,16 @@
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="PrG-vd-imo" secondAttribute="trailing" constant="32" id="9Fd-4D-oGN"/>
                 <constraint firstItem="PrG-vd-imo" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="DMq-Qc-6d1"/>
                 <constraint firstItem="Zn5-D8-Ipr" firstAttribute="top" secondItem="JuB-3d-ne8" secondAttribute="bottom" constant="28" id="Ec9-KA-wEv"/>
+                <constraint firstItem="Khc-l0-DEe" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="28" id="Efr-Ip-BUL"/>
                 <constraint firstItem="8mt-YG-X6I" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="F5O-9U-xg3"/>
                 <constraint firstItem="PrG-vd-imo" firstAttribute="top" secondItem="8mt-YG-X6I" secondAttribute="bottom" constant="8" id="KeR-5R-ZiP"/>
-                <constraint firstItem="j55-vq-cRx" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="60" id="MR2-NF-VaH"/>
                 <constraint firstItem="Itb-9A-fGn" firstAttribute="top" secondItem="PrG-vd-imo" secondAttribute="bottom" constant="28" id="aQ7-DU-a7x"/>
                 <constraint firstItem="JuB-3d-ne8" firstAttribute="top" secondItem="j55-vq-cRx" secondAttribute="bottom" constant="8" id="b5g-Fj-SQq"/>
                 <constraint firstItem="rhL-Ns-HL2" firstAttribute="top" secondItem="Khc-l0-DEe" secondAttribute="bottom" constant="8" id="bP2-aU-NFO"/>
-                <constraint firstItem="Khc-l0-DEe" firstAttribute="top" secondItem="oTx-WP-aZL" secondAttribute="bottom" constant="28" id="d1R-k4-dOA"/>
                 <constraint firstItem="rhL-Ns-HL2" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="dEi-1u-P0I"/>
                 <constraint firstItem="j55-vq-cRx" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="e8e-0L-zu6"/>
                 <constraint firstItem="oTx-WP-aZL" firstAttribute="top" secondItem="Itb-9A-fGn" secondAttribute="bottom" constant="8" id="fdT-5Z-zYC"/>
+                <constraint firstItem="j55-vq-cRx" firstAttribute="top" secondItem="rhL-Ns-HL2" secondAttribute="bottom" constant="28" id="g0L-7x-wer"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="oTx-WP-aZL" secondAttribute="trailing" constant="32" id="gwG-8H-Dep"/>
                 <constraint firstItem="Khc-l0-DEe" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="o5H-dh-EYR"/>
                 <constraint firstItem="8mt-YG-X6I" firstAttribute="top" secondItem="lNb-dG-Y5k" secondAttribute="bottom" constant="28" id="oTO-s6-IEr"/>

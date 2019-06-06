@@ -104,6 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)manager;
 
+//还原配置，还原配置后需要退出APP，重新打开生效
 + (void)resetConfig;
 
 /**
