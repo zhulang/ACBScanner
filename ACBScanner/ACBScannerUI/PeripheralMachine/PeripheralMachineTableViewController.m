@@ -65,7 +65,10 @@
     if (status == NO) {
         [ACProgressHUD toastMessage:@"中心设备没有接收成功" withImage:nil];
     }else{
-        [ACProgressHUD toastScuess:jsonString];
+        NSDictionary * dic = [jsonString mj_JSONObject];
+        NSDictionary * info = dic[self.serviceName];
+        NSString * code = info[@"code"];
+        [ACProgressHUD toastScuess:code];
     }
 }
 

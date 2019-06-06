@@ -72,7 +72,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgB-Hi-jac">
-                                <rect key="frame" x="64" y="842" width="286" height="0.0"/>
+                                <rect key="frame" x="87" y="842" width="240" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="8kI-7V-8kE"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -120,7 +123,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v1j-Su-prj" secondAttribute="trailing" constant="64" id="RIc-tH-Sz8"/>
                             <constraint firstItem="EgB-Hi-jac" firstAttribute="centerX" secondItem="5f6-rW-Zqh" secondAttribute="centerX" id="a24-Vb-bDO"/>
                             <constraint firstItem="v1j-Su-prj" firstAttribute="top" secondItem="cnQ-04-mzB" secondAttribute="bottom" constant="12" id="acw-UP-G18"/>
-                            <constraint firstItem="EgB-Hi-jac" firstAttribute="width" secondItem="5f6-rW-Zqh" secondAttribute="width" id="deQ-py-YdI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cnQ-04-mzB" secondAttribute="trailing" constant="64" id="h0P-xy-byI"/>
                             <constraint firstItem="5f6-rW-Zqh" firstAttribute="width" secondItem="cCh-KB-kkg" secondAttribute="width" id="m3Y-wI-kca"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qyC-62-28x" secondAttribute="trailing" constant="64" id="mSa-xJ-XPN"/>
