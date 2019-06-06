@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CodeTableViewCellDelegate <NSObject>
+
+- (void)openUrl:(NSString *)url;
+
+@end
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CodeTableViewCell : UITableViewCell
@@ -15,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *operatorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) id<CodeTableViewCellDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END

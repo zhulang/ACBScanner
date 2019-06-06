@@ -8,7 +8,6 @@
 
 #import "PeripheralMachineTableViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "PeripheralSettingViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "ACBScannerManager.h"
 
@@ -31,16 +30,24 @@
     [super viewDidLoad];
     self.navigationItem.title = @"扫描仪";
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)]];
-    
-    CGFloat w = [UIScreen mainScreen].bounds.size.width;
-    CGFloat h = [UIScreen mainScreen].bounds.size.height;
-    [[ACBScannerManager manager] initPeripheralManager:self.serviceName delegate:self preview:self.view previewLayerFrame:CGRectMake(0, 0, w, h)];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[ACBScannerManager manager] initPeripheralManager:self.serviceName delegate:self preview:self.view previewLayerFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    [[ACBScannerManager manager] beginScanningBarCode:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[ACBScannerManager manager] stopScanningBarCode];
 }
 
 - (void)setting
 {
-    PeripheralSettingViewController * vc = [[PeripheralSettingViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 

@@ -31,9 +31,9 @@
     self.operatorNumberTextField.text = [ACBScannerManager getOperatorNumber];
     self.tipLabel.text =
      @"使用说明：\n"
-     @"1.中心设备服务名称为必填项。\n"
-     @"2.中心设备设置，当前页面->中心设备->设置。\n"
-     @"3.扫描仪设置，当前页面->扫描仪->设置。";
+     @"1.开启蓝牙后使用。\n"
+     @"2.外设离中心设备距离不要超过100米。\n"
+     @"3.建议不要关闭连续对焦功能（默认开启）。";
     self.centerMachineButton.layer.cornerRadius = 4;
     self.centerMachineButton.clipsToBounds = YES;
     self.peripheralMachineButton.layer.cornerRadius = 4;

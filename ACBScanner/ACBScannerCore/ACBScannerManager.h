@@ -78,6 +78,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)initPeripheralManager:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame;
 
+
+//开始扫描附设
+- (void)beginScanningPeripheral;
+
+//停止扫描外设
+- (void)stopScanningPeripheral;
+
 /**
  @ serviceName，服务名称
  @ viewController，中设代理
@@ -96,6 +103,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,weak) id<ACBScannerCenterMachineDelegate> centerMachineDelegate;
 
 + (instancetype)manager;
+
++ (void)resetConfig;
 
 /**
  @ number ,the number of center machine connects. the value between 1 to 7 ,default is 7

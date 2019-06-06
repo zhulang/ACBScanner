@@ -22,10 +22,10 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
 //附设属性
 @property (nonatomic,strong) CBCentral * central;
 @property (nonatomic,strong) CBPeripheralManager * peripheralManager;
-@property (nonatomic,strong) CBUUID * myCubbid;
-@property (nonatomic,strong) UIView * preview;
 @property (nonatomic,copy) NSString * code;
+
 @property (nonatomic,strong) NSMutableArray * brightnessVlaueArr;
+@property (nonatomic,strong) UIView * preview;
 @property (nonatomic,strong) AVCaptureDevice * device;
 @property (nonatomic,strong) AVCaptureDeviceInput * deviceInput;
 @property (nonatomic,strong) AVCaptureMetadataOutput * metadataOutput;
@@ -55,6 +55,30 @@ static dispatch_once_t onceToken;
     return manager;
 }
 
++ (void)resetConfig
+{
+    ACBScannerCongfig * instance = [[ACBScannerCongfig alloc] init];
+    PeripheralCongfig * peripheralConfig = [[PeripheralCongfig alloc] init];
+    peripheralConfig.torchOn = YES;
+    peripheralConfig.torchAuto = NO;
+    peripheralConfig.brightness = 0.8;
+    peripheralConfig.fps = 30;
+    peripheralConfig.focusMode = ACBFocusModeContinuousAutoFocus;
+    instance.peripheralConfig = peripheralConfig;
+    CenterCongfig * centerConfig = [[CenterCongfig alloc] init];
+    centerConfig.maxInterfaceNumber = 7;
+    centerConfig.maxCacheNumber = 2000;
+    centerConfig.uploadUrl = @"";
+    centerConfig.dataUrl = @"";
+    centerConfig.autoUpload = YES;
+    instance.centerConfig = centerConfig;
+    ScannerOperator * people = [[ScannerOperator alloc] init];
+    people.name = @"";
+    people.number = @"";
+    instance.worker = people;
+    [ACBScannerCongfig archiver:instance];
+}
+
 #pragma mark - peripheral device methods
 - (void)beginScanningBarCode:(BOOL)resetTorch
 {
@@ -64,7 +88,7 @@ static dispatch_once_t onceToken;
     if (resetTorch) {
         [self resetTorch];
     }
-    self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
+    self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
     [self.session startRunning];
     if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralDidStartScanning)]) {
         [self.peripheralDelegate peripheralDidStartScanning];
@@ -74,9 +98,21 @@ static dispatch_once_t onceToken;
 - (void)stopScanningBarCode
 {
     [self.session stopRunning];
+    self.session = nil;
+    self.central = nil;
+    self.code = nil;
+    self.brightnessVlaueArr = nil;
+    self.preview = nil;
+    self.device = nil;
+    self.deviceInput = nil;
+    self.metadataOutput = nil;
+    self.videoDataOutput = nil;
+    self.videoPreviewLayer = nil;
+    
     if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralDidStopScanning)]) {
         [self.peripheralDelegate peripheralDidStopScanning];
     }
+    self.peripheralDelegate = nil;
 }
 
 - (void)initPeripheralManager:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame
@@ -86,7 +122,6 @@ static dispatch_once_t onceToken;
     self.preview = preview;
     self.previewLayerFrame = previewLayerFrame;
     self.brightnessVlaueArr = [NSMutableArray array];
-    [self beginScanningBarCode:NO];
 }
 
 - (AVCaptureSession *)session
@@ -126,7 +161,7 @@ static dispatch_once_t onceToken;
         AVMetadataMachineReadableCodeObject *obj = metadataObjects[0];
         self.code = [obj stringValue];
         if (self.code) {
-            [self stopScanningBarCode];
+            [self.session stopRunning];
             [self sendData];
         }
     } else {
@@ -226,7 +261,6 @@ static dispatch_once_t onceToken;
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-    self.myCubbid = [CBUUID UUIDWithString:[UIDevice currentDevice].identifierForVendor.UUIDString];
     CBMutableService * service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:SERVICE_UUID] primary:YES];
     CBMutableCharacteristic * characteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:CHARACTERISTIC_UUID] properties:CBCharacteristicPropertyWrite | CBCharacteristicPropertyRead | CBCharacteristicPropertyNotify value:nil permissions:CBAttributePermissionsReadable | CBAttributePermissionsWriteable];
     [service setCharacteristics:@[characteristic]];
@@ -270,7 +304,7 @@ static dispatch_once_t onceToken;
                 [self.peripheralDelegate peripheralDidSendJsonString:jsonStr status:YES];
             }
             sleep(60.0 / [ACBScannerManager getPeripheralFps]);
-            [self beginScanningBarCode:NO];
+            [self.session startRunning];
         }else{
             if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralDidSendJsonString:status:)]) {
                 [self.peripheralDelegate peripheralDidSendJsonString:jsonStr status:NO];
@@ -279,7 +313,7 @@ static dispatch_once_t onceToken;
     }else{
         NSLog(@"未找到中心设备");
         sleep(60.0 / [ACBScannerManager getPeripheralFps]);
-        [self beginScanningBarCode:NO];
+        [self.session startRunning];
     }
 }
 
@@ -309,27 +343,27 @@ static dispatch_once_t onceToken;
     }
 }
 
+#pragma mark - 中心设备
+- (void)beginScanningPeripheral
+{
+    if (self.resultData == nil) {
+        self.resultData = [NSMutableArray arrayWithCapacity:0];
+    }
+    [self.manager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]] options:nil];
+    if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidStartScanForPeripheralsWithServices:)]) {
+        [self.centerMachineDelegate centralDidStartScanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]]];
+    }
+}
 
+- (void)stopScanningPeripheral
+{
+    [self.manager stopScan];
+    self.manager = nil;
+    self.peripheralArr = [NSMutableArray arrayWithCapacity:0];
+    self.peripheralUUIDSet = [NSMutableSet setWithCapacity:0];
+    self.resultData = [NSMutableArray arrayWithCapacity:0];
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#pragma mark - center peripheral device methods
 - (void)initCenterMachineManager:(NSString *)serviceName delegate:(id<ACBScannerCenterMachineDelegate>)viewController
 {
     self.serviceName = serviceName;
@@ -357,10 +391,7 @@ static dispatch_once_t onceToken;
             NSLog(@">>CBManagerStatePoweredOff");
             break;
         case CBManagerStatePoweredOn:
-            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidStartScanForPeripheralsWithServices:)]) {
-                [self.centerMachineDelegate centralDidStartScanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]]];
-            }
-            [self.manager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]] options:nil];
+            [self beginScanningPeripheral];
             break;
         default:
             break;
@@ -375,10 +406,10 @@ static dispatch_once_t onceToken;
             [self.peripheralUUIDSet addObject:uuid];
             if (self.peripheralArr && self.peripheralArr.count < [ACBScannerManager getCenterMaxInterfaceNumber]) {
                 [self.peripheralArr addObject:peripheral];
+                [self.manager connectPeripheral:peripheral options:nil];
                 if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheralsUpdate:)]) {
                     [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
                 }
-                [self.manager connectPeripheral:peripheral options:nil];
             }
         }
     }
@@ -461,9 +492,10 @@ static dispatch_once_t onceToken;
     if (characteristic.isNotifying) {
         [peripheral readValueForCharacteristic:characteristic];
     }
-//    else {
-//        [self.manager cancelPeripheralConnection:peripheral];
-//    }
+    else
+    {
+        [self.manager cancelPeripheralConnection:peripheral];
+    }
 }
 
 //数据写入成功回调
@@ -474,55 +506,6 @@ static dispatch_once_t onceToken;
         [self.centerMachineDelegate centralForPeripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #pragma mark - setter methods
 + (void)setCenterMaxInterfaceNumber:(NSInteger)number

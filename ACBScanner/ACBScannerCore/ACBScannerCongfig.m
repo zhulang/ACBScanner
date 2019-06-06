@@ -25,7 +25,7 @@
                 peripheralConfig.torchAuto = NO;
                 peripheralConfig.brightness = 0.8;
                 peripheralConfig.fps = 30;
-                peripheralConfig.focusMode = 0;
+                peripheralConfig.focusMode = ACBFocusModeContinuousAutoFocus;
                 instance.peripheralConfig = peripheralConfig;
                 CenterCongfig * centerConfig = [[CenterCongfig alloc] init];
                 centerConfig.maxInterfaceNumber = 7;

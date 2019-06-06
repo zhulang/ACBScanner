@@ -10,8 +10,9 @@
 #import "CenterMachineSettingViewController.h"
 #import "CodeTableViewCell.h"
 #import "ACBScannerManager.h"
+#import "WKWebViewController.h"
 
-@interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate>
+@interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate,CodeTableViewCellDelegate>
 @property (nonatomic,copy) NSString * serviceName;
 @property (nonatomic,strong) NSArray * peripheralArr;
 @property (nonatomic,strong) NSArray * resultData;
@@ -30,16 +31,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [ACBScannerManager manager].centerMachineDelegate = self;
     self.navigationItem.title = @"中心设备";
-    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)],[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(uploadData)]];
-    self.resultData = [NSMutableArray array];
+    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(uploadData)]];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CodeTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([CodeTableViewCell class])];
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 300 ;
 }
 
-- (void)setting
+- (void)viewDidAppear:(BOOL)animated
 {
-    [self.navigationController pushViewController:[CenterMachineSettingViewController new] animated:YES];
+    [super viewDidAppear:animated];
+    [[ACBScannerManager manager] initCenterMachineManager:self.serviceName delegate:self];
+    [[ACBScannerManager manager] beginScanningPeripheral];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[ACBScannerManager manager] stopScanningPeripheral];
 }
 
 - (void)uploadData
@@ -99,6 +109,7 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([CodeTableViewCell class]) owner:self options:nil] lastObject];
         }
+        cell.delegate = self;
         NSDictionary * dic = self.resultData[indexPath.row];
         cell.info = dic;
         return cell;
@@ -149,34 +160,45 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 #pragma mark - ACBScannerCenterMachineDelegate methods
 - (void)centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids
 {
-    
+    NSLog(@"centralDidStartScanForPeripheralsWithServices");
 }
 
 - (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr
 {
+    NSLog(@"centralForPeripheralsUpdate");
     self.peripheralArr = peripheralArr;
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadData];
 }
 
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
 {
-    
+    [self.tableView reloadData];
+    NSLog(@"didDiscoverServices");
 }
 
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error
 {
-    
+    NSLog(@"didDiscoverCharacteristicsForService");
 }
 
 - (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value
 {
+    NSLog(@"centralDidReadValueForCharacteristic");
     self.resultData = resultData;
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadData];
 }
 
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
-    
+    NSLog(@"didWriteValueForCharacteristic");
+}
+
+#pragma mark - Codecelldelegate methods
+- (void)openUrl:(NSString *)url
+{
+    WKWebViewController * vc = [[WKWebViewController alloc] init];
+    vc.url = url;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
