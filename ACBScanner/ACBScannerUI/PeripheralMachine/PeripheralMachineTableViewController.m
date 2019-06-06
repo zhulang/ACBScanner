@@ -10,6 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <AVFoundation/AVFoundation.h>
 #import "ACBScannerManager.h"
+#import "ACProgressHUD.h"
 
 @interface PeripheralMachineTableViewController ()<ACBScannerPeripheralDelegate>
 @property (nonatomic,copy) NSString * serviceName;
@@ -45,31 +46,26 @@
 }
 
 #pragma mark - ACBScannerPeripheralDelegate methods
-- (void)peripheralDidSendData:(NSDictionary *)dataDic status:(BOOL)status;
-{
-    NSLog(@"peripheralDidSendData - %@",dataDic);
-}
-
 - (void)peripheralRecogniseDidFail:(NSString *)errorDescription
 {
-    NSLog(@"%@",errorDescription);
+    [ACProgressHUD toastMessage:errorDescription withImage:nil];
 }
 
 - (void)peripheralDidStopScanning
 {
-    NSLog(@"已停止扫描");
+    [ACProgressHUD toastMessage:@"停止扫描" withImage:nil];
 }
 
 - (void)peripheralDidStartScanning
 {
-    NSLog(@"已开始扫描");
+    [ACProgressHUD toastMessage:@"开始扫描" withImage:nil];
 }
 
 - (void)peripheralDidSendJsonString:(nonnull NSString *)jsonString status:(BOOL)status {
     if (status == NO) {
-        NSLog(@"数据已发出，中心设备没有接收成功");
+        [ACProgressHUD toastMessage:@"中心设备没有接收成功" withImage:nil];
     }else{
-        NSLog(@"中心设备已成功接收成功");
+        [ACProgressHUD toastScuess:jsonString];
     }
 }
 

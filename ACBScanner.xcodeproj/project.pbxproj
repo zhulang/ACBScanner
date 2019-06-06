@@ -279,6 +279,7 @@
 				B752D1BA229696290035712F /* Sources */,
 				B752D1BB229696290035712F /* Frameworks */,
 				B752D1BC229696290035712F /* Resources */,
+				2304C14EC1D766F3D21E0421 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -399,6 +400,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2304C14EC1D766F3D21E0421 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ACBScanner/Pods-ACBScanner-resources.sh",
+				"${PODS_ROOT}/ACProgressHUD/ACProgressHUD/ACProgressHUD.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ACProgressHUD.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ACBScanner/Pods-ACBScanner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		92836A82EB3478311BD64441 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

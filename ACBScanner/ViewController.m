@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UIButton *centerMachineButton;
 @property (weak, nonatomic) IBOutlet UIButton *peripheralMachineButton;
+@property (weak, nonatomic) IBOutlet UIButton *center2scanButton;
+@property (weak, nonatomic) IBOutlet UIButton *peripheralSelfUploadButton;
+
 @end
 
 @implementation ViewController
@@ -38,15 +41,13 @@
     self.centerMachineButton.clipsToBounds = YES;
     self.peripheralMachineButton.layer.cornerRadius = 4;
     self.peripheralMachineButton.clipsToBounds = YES;
+    self.center2scanButton.layer.cornerRadius = 4;
+    self.center2scanButton.clipsToBounds = YES;
+    self.peripheralSelfUploadButton.layer.cornerRadius = 4;
+    self.peripheralSelfUploadButton.clipsToBounds = YES;
     
     self.centerMachineButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.centerMachineButton.titleLabel.numberOfLines = 0;
-    [self.centerMachineButton setTitle:@"中心设备\n（Center Machine）" forState:UIControlStateNormal];
-    
     self.peripheralMachineButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.peripheralMachineButton.titleLabel.numberOfLines = 0;
-    [self.peripheralMachineButton setTitle:@"扫描仪\n（Scanner）" forState:UIControlStateNormal];
-    
     self.operatorNumberTextField.delegate = self;
     self.operatorNameTextField.delegate = self;
 }
@@ -85,6 +86,16 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+}
+
+- (IBAction)uploadPeripheralSelf:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)connectScan:(UIButton *)sender
+{
+
 }
 
 - (void)fieldResignFirstResponder

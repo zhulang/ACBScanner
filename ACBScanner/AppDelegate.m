@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ACBScannerManager.h"
+#import "ACProgressHUD.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,9 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    ACBScannerManager *manager = [ACBScannerManager manager];
+    [ACBScannerManager manager];
+    [ACProgressHUD setToastBackgroundColor:19.0 green:184.0 blue:250.0 andAlpha:1.0];
+
     return YES;
 }
 

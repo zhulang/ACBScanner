@@ -11,6 +11,7 @@
 #import "CodeTableViewCell.h"
 #import "ACBScannerManager.h"
 #import "WKWebViewController.h"
+#import "ACProgressHUD.h"
 
 @interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate,CodeTableViewCellDelegate>
 @property (nonatomic,copy) NSString * serviceName;
@@ -158,14 +159,9 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 }
 
 #pragma mark - ACBScannerCenterMachineDelegate methods
-- (void)centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids
-{
-    NSLog(@"centralDidStartScanForPeripheralsWithServices");
-}
-
 - (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr
 {
-    NSLog(@"centralForPeripheralsUpdate");
+    [ACProgressHUD toastScuess:@"发现了新设备"];
     self.peripheralArr = peripheralArr;
     [self.tableView reloadData];
 }
@@ -173,24 +169,18 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
 {
     [self.tableView reloadData];
-    NSLog(@"didDiscoverServices");
-}
-
-- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error
-{
-    NSLog(@"didDiscoverCharacteristicsForService");
 }
 
 - (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value
 {
-    NSLog(@"centralDidReadValueForCharacteristic");
+    [ACProgressHUD toastScuess:@"有了新数据"];
     self.resultData = resultData;
     [self.tableView reloadData];
 }
 
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
-    NSLog(@"didWriteValueForCharacteristic");
+   [ACProgressHUD toastScuess:@"写入数据成功"];
 }
 
 #pragma mark - Codecelldelegate methods

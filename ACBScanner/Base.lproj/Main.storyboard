@@ -19,12 +19,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mT8-4U-UAc">
-                                <rect key="frame" x="64" y="328" width="286" height="64"/>
+                                <rect key="frame" x="64" y="340" width="286" height="44"/>
                                 <color key="backgroundColor" red="0.58122764284195849" green="0.79823955540406655" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="xp8-BX-FyQ"/>
+                                    <constraint firstAttribute="height" constant="44" id="Rk3-DV-NzQ"/>
                                 </constraints>
-                                <state key="normal" title="中心设备（Center Machine）">
+                                <state key="normal" title="中心设备">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -32,9 +32,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnQ-04-mzB">
-                                <rect key="frame" x="64" y="422" width="286" height="64"/>
+                                <rect key="frame" x="64" y="396" width="286" height="44"/>
                                 <color key="backgroundColor" red="0.62745098039215685" green="0.792156862745098" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="扫描仪（Scanner）">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="jxK-1a-vac"/>
+                                </constraints>
+                                <state key="normal" title="扫描仪">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -42,7 +45,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="中心设备服务名称" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5f6-rW-Zqh">
-                                <rect key="frame" x="64" y="260" width="286" height="44"/>
+                                <rect key="frame" x="64" y="228" width="286" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="gax-bq-qr3"/>
                                 </constraints>
@@ -51,7 +54,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="操作者姓名" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SJc-el-gQS">
-                                <rect key="frame" x="64" y="148" width="286" height="44"/>
+                                <rect key="frame" x="64" y="116" width="286" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="e9p-T1-M7N"/>
                                 </constraints>
@@ -60,7 +63,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="操作者工号" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cCh-KB-kkg">
-                                <rect key="frame" x="64" y="204" width="286" height="44"/>
+                                <rect key="frame" x="64" y="172" width="286" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="s8W-rP-hLH"/>
                                 </constraints>
@@ -69,33 +72,64 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgB-Hi-jac">
-                                <rect key="frame" x="207" y="842" width="0.0" height="0.0"/>
+                                <rect key="frame" x="64" y="842" width="286" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyC-62-28x">
+                                <rect key="frame" x="64" y="284" width="286" height="44"/>
+                                <color key="backgroundColor" red="0.62745098040000002" green="0.79215686269999996" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="7vC-Ub-wkv"/>
+                                </constraints>
+                                <state key="normal" title="自上传">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadPeripheralSelf:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JSO-IC-MIk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1j-Su-prj">
+                                <rect key="frame" x="64" y="452" width="286" height="44"/>
+                                <color key="backgroundColor" red="0.62745098040000002" green="0.79215686269999996" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="tQB-NL-jal"/>
+                                </constraints>
+                                <state key="normal" title="对接扫描枪">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectScan:" destination="BYZ-38-t0r" eventType="touchUpInside" id="obI-1c-ZvX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cCh-KB-kkg" firstAttribute="width" secondItem="SJc-el-gQS" secondAttribute="width" id="0Aw-JV-pbv"/>
-                            <constraint firstItem="SJc-el-gQS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="2xP-Zw-Lbl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mT8-4U-UAc" secondAttribute="trailing" constant="64" id="0Nb-9E-7gf"/>
+                            <constraint firstItem="SJc-el-gQS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="28" id="2xP-Zw-Lbl"/>
                             <constraint firstItem="cCh-KB-kkg" firstAttribute="top" secondItem="SJc-el-gQS" secondAttribute="bottom" constant="12" id="33U-V4-g60"/>
-                            <constraint firstItem="cnQ-04-mzB" firstAttribute="width" secondItem="mT8-4U-UAc" secondAttribute="width" id="5Ll-fc-gHN"/>
+                            <constraint firstItem="cnQ-04-mzB" firstAttribute="top" secondItem="mT8-4U-UAc" secondAttribute="bottom" constant="12" id="59Q-Ua-RmQ"/>
+                            <constraint firstItem="mT8-4U-UAc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="6yK-IJ-cf6"/>
+                            <constraint firstItem="mT8-4U-UAc" firstAttribute="top" secondItem="qyC-62-28x" secondAttribute="bottom" constant="12" id="794-al-LHo"/>
+                            <constraint firstItem="cnQ-04-mzB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="9SH-IY-pya"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EgB-Hi-jac" secondAttribute="bottom" constant="20" id="EAe-7B-w9s"/>
-                            <constraint firstItem="EgB-Hi-jac" firstAttribute="centerX" secondItem="cnQ-04-mzB" secondAttribute="centerX" id="FIe-sq-O2T"/>
                             <constraint firstItem="5f6-rW-Zqh" firstAttribute="top" secondItem="cCh-KB-kkg" secondAttribute="bottom" constant="12" id="HTG-7E-KBb"/>
-                            <constraint firstItem="cnQ-04-mzB" firstAttribute="centerX" secondItem="mT8-4U-UAc" secondAttribute="centerX" id="QbH-JW-rU3"/>
                             <constraint firstItem="SJc-el-gQS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="R9V-PR-m1l"/>
-                            <constraint firstItem="cnQ-04-mzB" firstAttribute="top" secondItem="mT8-4U-UAc" secondAttribute="bottom" constant="30" id="Wzk-v1-Hit"/>
-                            <constraint firstItem="mT8-4U-UAc" firstAttribute="centerX" secondItem="5f6-rW-Zqh" secondAttribute="centerX" id="auq-Jc-6iU"/>
-                            <constraint firstItem="mT8-4U-UAc" firstAttribute="leading" secondItem="5f6-rW-Zqh" secondAttribute="leading" id="cJl-4v-hiP"/>
-                            <constraint firstItem="mT8-4U-UAc" firstAttribute="top" secondItem="5f6-rW-Zqh" secondAttribute="bottom" constant="24" id="d1k-6T-wVT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v1j-Su-prj" secondAttribute="trailing" constant="64" id="RIc-tH-Sz8"/>
+                            <constraint firstItem="EgB-Hi-jac" firstAttribute="centerX" secondItem="5f6-rW-Zqh" secondAttribute="centerX" id="a24-Vb-bDO"/>
+                            <constraint firstItem="v1j-Su-prj" firstAttribute="top" secondItem="cnQ-04-mzB" secondAttribute="bottom" constant="12" id="acw-UP-G18"/>
+                            <constraint firstItem="EgB-Hi-jac" firstAttribute="width" secondItem="5f6-rW-Zqh" secondAttribute="width" id="deQ-py-YdI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cnQ-04-mzB" secondAttribute="trailing" constant="64" id="h0P-xy-byI"/>
                             <constraint firstItem="5f6-rW-Zqh" firstAttribute="width" secondItem="cCh-KB-kkg" secondAttribute="width" id="m3Y-wI-kca"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qyC-62-28x" secondAttribute="trailing" constant="64" id="mSa-xJ-XPN"/>
+                            <constraint firstItem="qyC-62-28x" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="p3i-xP-yyT"/>
                             <constraint firstItem="cCh-KB-kkg" firstAttribute="centerX" secondItem="SJc-el-gQS" secondAttribute="centerX" id="w4H-KF-MgX"/>
                             <constraint firstItem="SJc-el-gQS" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="whp-SV-JOW"/>
                             <constraint firstItem="5f6-rW-Zqh" firstAttribute="centerX" secondItem="cCh-KB-kkg" secondAttribute="centerX" id="xHj-JD-fzy"/>
-                            <constraint firstItem="cnQ-04-mzB" firstAttribute="height" secondItem="mT8-4U-UAc" secondAttribute="height" id="xZU-7I-nbu"/>
-                            <constraint firstItem="mT8-4U-UAc" firstAttribute="width" secondItem="5f6-rW-Zqh" secondAttribute="width" id="yB6-KN-57I"/>
+                            <constraint firstItem="v1j-Su-prj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="64" id="y6s-t4-0Pa"/>
+                            <constraint firstItem="qyC-62-28x" firstAttribute="top" secondItem="5f6-rW-Zqh" secondAttribute="bottom" constant="12" id="z4I-KQ-T63"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -108,17 +142,19 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="center2scanButton" destination="v1j-Su-prj" id="Noz-NO-naC"/>
                         <outlet property="centerMachineButton" destination="mT8-4U-UAc" id="nyt-RG-V9E"/>
                         <outlet property="operatorNameTextField" destination="SJc-el-gQS" id="3p3-CL-Z9h"/>
                         <outlet property="operatorNumberTextField" destination="cCh-KB-kkg" id="BWH-Ze-47I"/>
                         <outlet property="peripheralMachineButton" destination="cnQ-04-mzB" id="Th9-1F-8ix"/>
+                        <outlet property="peripheralSelfUploadButton" destination="qyC-62-28x" id="B9T-yL-UTj"/>
                         <outlet property="textField" destination="5f6-rW-Zqh" id="6a9-nf-CTr"/>
                         <outlet property="tipLabel" destination="EgB-Hi-jac" id="plW-z0-a1V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1197" y="-338"/>
+            <point key="canvasLocation" x="1195.6521739130435" y="-338.16964285714283"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="yyp-fg-0sg">

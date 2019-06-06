@@ -1,4 +1,5 @@
 PODS:
+  - ACProgressHUD (1.0.1)
   - AFNetworking (3.2.1):
     - AFNetworking/NSURLSession (= 3.2.1)
     - AFNetworking/Reachability (= 3.2.1)
@@ -18,21 +19,24 @@ PODS:
   - MJExtension (3.0.17)
 
 DEPENDENCIES:
+  - ACProgressHUD (~> 1.0.1)
   - AFNetworking (~> 3.2.1)
   - MBProgressHUD (~> 0.8)
   - MJExtension (~> 3.0.13)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - ACProgressHUD
     - AFNetworking
     - MBProgressHUD
     - MJExtension
 
 SPEC CHECKSUMS:
+  ACProgressHUD: f34e47712c67d95e3d24a7c79ace861c2bf9e619
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJExtension: 74ec83124a68891619fb7ba9c5c811bbf1691076
 
-PODFILE CHECKSUM: 76998724aed67196b83349c6176e50a78b60da67
+PODFILE CHECKSUM: 10eae0c574a5136e5823fc39834cd13f37a52707
 
 COCOAPODS: 1.5.3
