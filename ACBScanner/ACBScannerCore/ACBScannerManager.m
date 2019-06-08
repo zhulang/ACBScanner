@@ -79,6 +79,20 @@ static dispatch_once_t onceToken;
     [ACBScannerCongfig archiver:instance];
 }
 
++ (void)uploadData:(void (^)(BOOL, NSString * _Nonnull))handler
+{
+    ACBScannerManager * manager = [ACBScannerManager manager];
+    NSArray * arr = manager.resultData;
+    [manager centerMachineUploadData:arr completeHandler:^(BOOL success, NSString * _Nonnull description) {
+        if (success) {
+            manager.resultData = [NSMutableArray arrayWithCapacity:0];
+        }
+        if (handler) {
+            handler(success,description);
+        }
+    }];
+}
+
 #pragma mark - peripheral device methods
 - (void)beginScanningBarCode:(BOOL)resetTorch
 {
@@ -182,7 +196,11 @@ static dispatch_once_t onceToken;
             [self.session stopRunning];
             if (self.uploadSelf)
             {
-                [self uploadData];
+                NSDateFormatter * dft = [[NSDateFormatter alloc] init];
+                [dft setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSDictionary * dataDic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":self.code,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
+                NSArray * arr = [NSArray arrayWithObject:dataDic];
+                [self uploadData:arr restartRunning:YES];
             }
             else
             {
@@ -312,14 +330,9 @@ static dispatch_once_t onceToken;
     
 }
 
-- (void)uploadData
+- (void)uploadData:(NSArray *)arr restartRunning:(BOOL)isRestart
 {
-    NSDateFormatter * dft = [[NSDateFormatter alloc] init];
-    [dft setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDictionary * dataDic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":self.code,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
-    NSArray * arr = [NSArray arrayWithObject:dataDic];
     NSString * jsonStr = [arr mj_JSONString];
-    
     NSURLSession * session = [NSURLSession sharedSession];
     NSURL *url = [NSURL URLWithString:self.uploadUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -331,17 +344,17 @@ static dispatch_once_t onceToken;
                 [self.peripheralDelegate didUpload:data response:response error:error];
             });
         }
-        sleep(60.0 / [ACBScannerManager getPeripheralFps]);
-        
-        [self.session startRunning];
-        [self resetTorch];
+        if (isRestart) {
+            sleep(60.0 / [ACBScannerManager getPeripheralFps]);
+            [self.session startRunning];
+            [self resetTorch];
+        }
     }];
     [dataTask resume];
 }
 
-- (void)centerMachineUploadData:(NSDictionary *)data
+- (void)centerMachineUploadData:(NSArray *)arr completeHandler:(void (^)(BOOL, NSString * _Nonnull))handler
 {
-    NSArray * arr = [NSArray arrayWithObject:data];
     NSString * jsonStr = [arr mj_JSONString];
     NSURLSession * session = [NSURLSession sharedSession];
     NSURL *url = [NSURL URLWithString:self.uploadUrl];
@@ -349,6 +362,9 @@ static dispatch_once_t onceToken;
     request.HTTPMethod = @"POST";
     request.HTTPBody = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (handler) {
+            handler(error ? NO : YES,error ? error.description : @"上传成功");
+        }
         if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(didUpload:response:error:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.centerMachineDelegate didUpload:data response:response error:error];
@@ -610,8 +626,7 @@ static dispatch_once_t onceToken;
         dic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":str,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
         [self.resultData insertObject:dic atIndex:0];
         if (self.autoUpload) {
-            [self centerMachineUploadData:dic];
-            NSLog(@"centerMachineUploadData %@",dic);
+            [self centerMachineUploadData:[NSArray arrayWithObject:dic] completeHandler:nil];
         }
         if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:)]) {
             [self.centerMachineDelegate centralDidReadValueForCharacteristic:dic];
@@ -620,7 +635,7 @@ static dispatch_once_t onceToken;
         @synchronized (self.resultData) {
             [self.resultData insertObject:dic atIndex:0];
             if (self.autoUpload) {
-                [self centerMachineUploadData:dic];
+                [self centerMachineUploadData:@[dic] completeHandler:nil];
             }
             if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:)]) {
                 [self.centerMachineDelegate centralDidReadValueForCharacteristic:dic];

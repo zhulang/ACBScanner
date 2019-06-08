@@ -62,7 +62,17 @@
 
 - (void)uploadData
 {
-    [self.navigationController pushViewController:[CenterMachineSettingViewController new] animated:YES];
+    [ACBScannerManager uploadData:^(BOOL success, NSString * _Nonnull description) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                self.resultData = [NSMutableArray arrayWithCapacity:0];
+                [self.tableView reloadData];
+                [ACProgressHUD toastScuess:description];
+            }else{
+                [ACProgressHUD toastMessage:description withImage:nil];
+            }
+        });
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
