@@ -10,6 +10,8 @@
 #import "CenterMachineTableViewController.h"
 #import "PeripheralMachineTableViewController.h"
 #import "ACBScannerManager.h"
+#import <AVFoundation/AVFoundation.h>
+#import "ACProgressHUD.h"
 
 @interface ViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textField;
@@ -74,6 +76,22 @@
 }
 
 - (IBAction)asViceMachine:(UIButton *)sender {
+    if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized) {
+        [ACProgressHUD toastMessage:@"请打开设想机权限" withImage:nil];
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self open];
+                });
+            }
+        }];
+        return;
+    }
+    [self open];
+}
+
+- (void)open
+{
     if (self.textField.text) {
         NSString * cubbId = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         if (cubbId.length == 0) {
@@ -86,6 +104,7 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+
 }
 
 - (IBAction)uploadPeripheralSelf:(UIButton *)sender

@@ -109,10 +109,23 @@ static dispatch_once_t onceToken;
     self.videoDataOutput = nil;
     self.videoPreviewLayer = nil;
     
+    [self.peripheralManager removeAllServices];
+    self.peripheralManager = nil;
+    
     if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralDidStopScanning)]) {
         [self.peripheralDelegate peripheralDidStopScanning];
     }
     self.peripheralDelegate = nil;
+}
+
+- (NSArray *)getResultData
+{
+    return self.resultData;
+}
+
+- (void)removeAllServices
+{
+    [self.peripheralManager removeAllServices];
 }
 
 - (void)initPeripheralManager:(NSString *)serviceName delegate:(id<ACBScannerPeripheralDelegate>)viewController preview:(UIView *)preview previewLayerFrame:(CGRect)previewLayerFrame
@@ -129,24 +142,27 @@ static dispatch_once_t onceToken;
     if (!_session) {
         self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
         
-        self.deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:nil];
+        NSError * error = nil;
+        self.deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
         
-        self.session = [[AVCaptureSession alloc] init];
-        self.session.sessionPreset = AVCaptureSessionPreset1920x1080;
+        _session = [[AVCaptureSession alloc] init];
+        _session.sessionPreset = AVCaptureSessionPreset1920x1080;
         
         self.metadataOutput = [[AVCaptureMetadataOutput alloc] init];
         [self.metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-        [self.session addOutput:self.metadataOutput];
+        [_session addOutput:self.metadataOutput];
         
         self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
         [self.videoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-        [self.session addOutput:self.videoDataOutput];
+        [_session addOutput:self.videoDataOutput];
         
-        [self.session addInput:self.deviceInput];
+        if ( [_session canAddInput:self.deviceInput] ) {
+            [_session addInput:self.deviceInput];
+        }
         
         self.metadataOutput.metadataObjectTypes = @[AVMetadataObjectTypeUPCECode,AVMetadataObjectTypeCode39Code ,AVMetadataObjectTypeCode39Mod43Code,AVMetadataObjectTypeEAN13Code,AVMetadataObjectTypeEAN8Code ,AVMetadataObjectTypeCode93Code,AVMetadataObjectTypeCode128Code,AVMetadataObjectTypePDF417Code,AVMetadataObjectTypeQRCode,AVMetadataObjectTypeAztecCode ,AVMetadataObjectTypeInterleaved2of5Code,AVMetadataObjectTypeITF14Code ,AVMetadataObjectTypeDataMatrixCode];
         
-        self.videoPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
+        self.videoPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
         self.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         self.videoPreviewLayer.frame = self.previewLayerFrame;
         UIView * view = ((UIViewController *)self.peripheralDelegate).view;
@@ -156,7 +172,6 @@ static dispatch_once_t onceToken;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    NSLog(@"metadataObjects - - %@", metadataObjects);
     if (metadataObjects != nil && metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *obj = metadataObjects[0];
         self.code = [obj stringValue];
@@ -178,7 +193,6 @@ static dispatch_once_t onceToken;
         CFRelease(metadataDict);
         NSDictionary *exifMetadata = [[metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary] mutableCopy];
         float brightnessValue = [[exifMetadata objectForKey:(NSString *)kCGImagePropertyExifBrightnessValue] floatValue];
-        NSLog(@"光源强度 %f",brightnessValue);
         @synchronized (self.brightnessVlaueArr) {
             [self.brightnessVlaueArr addObject:@(brightnessValue)];
         }
@@ -344,6 +358,11 @@ static dispatch_once_t onceToken;
 }
 
 #pragma mark - 中心设备
+- (void)connectPeripheral:(CBPeripheral *)peripheral
+{
+    [self.manager connectPeripheral:peripheral options:nil];
+}
+
 - (void)beginScanningPeripheral
 {
     if (self.resultData == nil) {
@@ -361,7 +380,6 @@ static dispatch_once_t onceToken;
     self.manager = nil;
     self.peripheralArr = [NSMutableArray arrayWithCapacity:0];
     self.peripheralUUIDSet = [NSMutableSet setWithCapacity:0];
-    self.resultData = [NSMutableArray arrayWithCapacity:0];
 }
 
 - (void)initCenterMachineManager:(NSString *)serviceName delegate:(id<ACBScannerCenterMachineDelegate>)viewController
@@ -376,22 +394,24 @@ static dispatch_once_t onceToken;
 {
     switch (central.state) {
         case CBManagerStateUnknown:
-            NSLog(@">>CBManagerStateUnknown");
+            NSLog(@"CBManagerStateUnknown");
             break;
         case CBManagerStateResetting:
-            NSLog(@">>CBManagerStateResetting");
+            NSLog(@"CBManagerStateResetting");
             break;
         case CBManagerStateUnsupported:
-            NSLog(@">>CBManagerStateUnsupported");
+            NSLog(@"CBManagerStateUnsupported");
             break;
         case CBManagerStateUnauthorized:
-            NSLog(@">>CBManagerStateUnauthorized");
+            NSLog(@"CBManagerStateUnauthorized");
             break;
         case CBManagerStatePoweredOff:
-            NSLog(@">>CBManagerStatePoweredOff");
+            NSLog(@"CBManagerStatePoweredOff");
             break;
         case CBManagerStatePoweredOn:
-            [self beginScanningPeripheral];
+            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidUpdateStatePoweredOn)]) {
+                [self.centerMachineDelegate centralDidUpdateStatePoweredOn];
+            }
             break;
         default:
             break;
@@ -401,8 +421,8 @@ static dispatch_once_t onceToken;
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI
 {
     NSString * uuid = peripheral.identifier.UUIDString;
-    if (![self.peripheralUUIDSet containsObject:uuid]) {
-        @synchronized (self.peripheralUUIDSet) {
+    @synchronized (self.peripheralArr) {
+        if (![self.peripheralUUIDSet containsObject:uuid]) {
             [self.peripheralUUIDSet addObject:uuid];
             if (self.peripheralArr && self.peripheralArr.count < [ACBScannerManager getCenterMaxInterfaceNumber]) {
                 [self.peripheralArr addObject:peripheral];
@@ -419,6 +439,25 @@ static dispatch_once_t onceToken;
 {
     peripheral.delegate = self;
     [peripheral discoverServices:@[[CBUUID UUIDWithString:SERVICE_UUID]]];
+}
+
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error{
+    if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidFailToConnectPeripheral:error:)]) {
+        [self.centerMachineDelegate centralDidFailToConnectPeripheral:peripheral error:error];
+    }
+}
+
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
+    if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidDisconnectPeripheral:error:complete:)]) {
+        [self.centerMachineDelegate centralDidDisconnectPeripheral:peripheral error:error complete:^(NSMutableArray * _Nonnull peripheralArr) {
+            self.peripheralArr = peripheralArr;
+            self.peripheralUUIDSet = [NSMutableSet set];
+            [self.peripheralArr enumerateObjectsUsingBlock:^(CBPeripheral *  _Nonnull peripheral, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString * uuid = peripheral.identifier.UUIDString;
+                [self.peripheralUUIDSet addObject:uuid];
+            }];
+        }];
+    }
 }
 
 #pragma mark - CBPeripheralDelegate methods

@@ -17,6 +17,16 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ACBScannerPeripheralDelegate <NSObject>
 
 /**
+ @ 附设停止扫描后回调的回调方法
+ */
+- (void)peripheralDidStopScanning;
+
+/**
+ @ 调用附设启动扫描后回调此方法
+ */
+- (void)peripheralDidStartScanning;
+
+/**
  @ 附设设备发送数据后的回调
  @  status, YES (send data successful)
  */
@@ -27,34 +37,34 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)peripheralRecogniseDidFail:(NSString *)errorDescription;
 
-/**
- @ 附设停止扫描后回调的回调方法
- */
-- (void)peripheralDidStopScanning;
-
-/**
- @ 调用附设启动扫描后回调此方法
- */
-- (void)peripheralDidStartScanning;
-
 @end
 
 @protocol ACBScannerCenterMachineDelegate <NSObject>
 
-//开始扫描外设
-- (void)centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids;
+//开启蓝牙之后回调
+- (void)centralDidUpdateStatePoweredOn;
+
+//成功读取值之后中心设备回调
+- (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
 
 //外设更新后回调
-- (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr;
+- (void)centralForPeripheralsUpdate:(NSMutableArray<CBPeripheral *> *)peripheralArr;
+
+//链接失败的回调方法
+- (void)centralDidFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error;
+
+//取消链接后回调方法
+- (void)centralDidDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error complete:(void (^)(NSMutableArray * peripheralArr))handler;
+
+@optional
+//开始扫描外设
+- (void)centralDidStartScanForPeripheralsWithServices:(NSArray<CBUUID *> *)cubbids;
 
 //发现服务后回调
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error;
 
 //发现characteristics后回调
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error;
-
-//成功读取值之后中心设备回调
-- (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
 
 //成功写入值之后中心设备回调
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error;
@@ -63,6 +73,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface ACBScannerManager : NSObject
+
+- (void)connectPeripheral:(CBPeripheral *)peripheral;
+
+- (NSArray *)getResultData;
+
+- (void)removeAllServices;
 
 //开始扫描条码或二维码
 - (void)beginScanningBarCode:(BOOL)resetTorch;

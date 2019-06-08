@@ -15,7 +15,7 @@
 
 @interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate,CodeTableViewCellDelegate>
 @property (nonatomic,copy) NSString * serviceName;
-@property (nonatomic,strong) NSArray * peripheralArr;
+@property (nonatomic,strong) NSMutableArray * peripheralArr;
 @property (nonatomic,strong) NSArray * resultData;
 @end
 
@@ -37,14 +37,15 @@
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CodeTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([CodeTableViewCell class])];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 300 ;
+    self.tableView.estimatedRowHeight = 300;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [[ACBScannerManager manager] initCenterMachineManager:self.serviceName delegate:self];
-    [[ACBScannerManager manager] beginScanningPeripheral];
+    self.resultData = [[ACBScannerManager manager] getResultData];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -90,11 +91,11 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
                 cell.detailTextLabel.text = @"点击重新连接";
                 break;
             case CBPeripheralStateConnecting:
-                cell.detailTextLabel.textColor = [UIColor blueColor];
+                cell.detailTextLabel.textColor = [UIColor lightGrayColor];
                 cell.detailTextLabel.text = @"连接中...";
                 break;
             case CBPeripheralStateConnected:
-                cell.detailTextLabel.textColor = [UIColor greenColor];
+                cell.detailTextLabel.textColor = [UIColor blueColor];
                 cell.detailTextLabel.text = @"已连接";
                 break;
             case CBPeripheralStateDisconnecting:
@@ -153,13 +154,27 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
     return section == 0 ? 8 : 0.01;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CBPeripheral * peripheral = self.peripheralArr[indexPath.row];
+    if (peripheral.state == CBPeripheralStateDisconnected) {
+        [[ACBScannerManager manager] connectPeripheral:peripheral];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - ACBScannerCenterMachineDelegate methods
-- (void)centralForPeripheralsUpdate:(NSArray<CBPeripheral *> *)peripheralArr
+- (void)centralDidUpdateStatePoweredOn
+{
+    [[ACBScannerManager manager] beginScanningPeripheral];
+}
+
+- (void)centralForPeripheralsUpdate:(NSMutableArray<CBPeripheral *> *)peripheralArr
 {
     [ACProgressHUD toastScuess:@"发现了新设备"];
     self.peripheralArr = peripheralArr;
@@ -181,6 +196,29 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 - (void)centralForPeripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
 {
    [ACProgressHUD toastScuess:@"写入数据成功"];
+}
+
+- (void)centralDidFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    NSLog(@"%@",@"centralDidFailToConnectPeripheral");
+    [self removePeripheral:peripheral];
+    [self.tableView reloadData];
+}
+
+- (void)centralDidDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error complete:(nonnull void (^)(NSMutableArray * _Nonnull))handler
+{
+//    [self removePeripheral:peripheral];
+//    handler(self.peripheralArr);
+    [self.tableView reloadData];
+}
+
+- (void)removePeripheral:(CBPeripheral *)peripheral
+{
+    if ([self.peripheralArr containsObject:peripheral]) {
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.peripheralArr];
+        [arr removeObject:peripheral];
+        self.peripheralArr = arr;
+    }
 }
 
 #pragma mark - Codecelldelegate methods
