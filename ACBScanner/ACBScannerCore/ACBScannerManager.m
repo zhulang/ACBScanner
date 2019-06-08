@@ -339,7 +339,7 @@ static dispatch_once_t onceToken;
     [dataTask resume];
 }
 
-- (void)uploadData:(NSDictionary *)data
+- (void)centerMachineUploadData:(NSDictionary *)data
 {
     NSArray * arr = [NSArray arrayWithObject:data];
     NSString * jsonStr = [arr mj_JSONString];
@@ -350,15 +350,11 @@ static dispatch_once_t onceToken;
     request.HTTPMethod = @"POST";
     request.HTTPBody = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(didUpload:response:error:)]) {
+        if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(didUpload:response:error:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.peripheralDelegate didUpload:data response:response error:error];
+                [self.centerMachineDelegate didUpload:data response:response error:error];
             });
         }
-        sleep(60.0 / [ACBScannerManager getPeripheralFps]);
-        
-        [self.session startRunning];
-        [self resetTorch];
     }];
     [dataTask resume];
 }
@@ -575,6 +571,9 @@ static dispatch_once_t onceToken;
     if (dic) {
         @synchronized (self.resultData) {
             [self.resultData insertObject:dic atIndex:0];
+            if (self.autoUpload) {
+                [self centerMachineUploadData:dic];
+            }
             if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:)]) {
                 [self.centerMachineDelegate centralDidReadValueForCharacteristic:dic];
             }

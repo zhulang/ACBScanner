@@ -174,6 +174,13 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 }
 
 #pragma mark - ACBScannerCenterMachineDelegate methods
+//自动上传模式，数据上传后的回调
+- (void)didUpload:(NSData *)data response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error
+{
+    NSString * str = [NSString stringWithFormat:@"statusCode: %zd",((NSHTTPURLResponse *)response).statusCode];
+    [ACProgressHUD toastMessage:str withImage:nil];
+}
+
 - (void)centralDidUpdateStatePoweredOn
 {
     [[ACBScannerManager manager] beginScanningPeripheral];
@@ -193,7 +200,9 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 
 - (void)centralDidReadValueForCharacteristic:(NSDictionary *)currentRecord
 {
-    [ACProgressHUD toastScuess:@"有了新数据"];
+    if ([ACBScannerManager manager].autoUpload == NO) {
+        [ACProgressHUD toastScuess:@"有了新数据"];
+    }
     [self.resultData insertObject:currentRecord atIndex:0];
     [self.tableView reloadData];
 }

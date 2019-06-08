@@ -46,6 +46,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ACBScannerCenterMachineDelegate <NSObject>
 
+//自动上传模式，数据上传后的回调
+- (void)didUpload:(NSData *)data response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error;
+
 //开启蓝牙之后回调
 - (void)centralDidUpdateStatePoweredOn;
 
