@@ -135,6 +135,13 @@
 
 - (IBAction)connectScan:(UIButton *)sender
 {
+    if ([ACBScannerManager manager].autoUpload && ([ACBScannerManager manager].uploadUrl == nil || ![[ACBScannerManager manager].uploadUrl hasPrefix:@"http"])) {
+        UIAlertController * alt = [UIAlertController alertControllerWithTitle:nil message:@"当前处于自动上传数据模式，请先正确填写好上传地址" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * act = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {}];
+        [alt addAction:act];
+        [self presentViewController:alt animated:YES completion:nil];
+        return;
+    }
     UIAlertController * alt = [UIAlertController alertControllerWithTitle:@"扫描枪名称" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     [alt addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {

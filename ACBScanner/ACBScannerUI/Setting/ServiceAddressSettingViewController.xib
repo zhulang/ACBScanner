@@ -22,17 +22,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入上报数据地址" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-SZ-TBr">
-                    <rect key="frame" x="32" y="48" width="311" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="4qT-N0-5Pg"/>
-                    </constraints>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入查看上报数据地址" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qzq-hd-l6W">
-                    <rect key="frame" x="32" y="120" width="311" height="44"/>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://webservice-address.coml" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qzq-hd-l6W">
+                    <rect key="frame" x="32" y="191" width="311" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="arC-Dl-L72"/>
                         <constraint firstAttribute="height" constant="44" id="lh7-qK-AC9"/>
@@ -41,14 +32,48 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入查看上报数据地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXa-dN-B3U">
+                    <rect key="frame" x="32" y="153" width="169" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="Sqx-hl-yBg"/>
+                        <constraint firstAttribute="height" constant="18" id="aUU-Wh-Ktd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入上报数据地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDb-mg-cOm">
+                    <rect key="frame" x="32" y="48" width="138" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="18" id="39e-QD-pAy"/>
+                        <constraint firstAttribute="height" constant="18" id="CGF-Sq-tf5"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="rNt-M6-f3s"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://webservice-address.com:port" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-SZ-TBr">
+                    <rect key="frame" x="32" y="81" width="311" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="4qT-N0-5Pg"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="TJB-SZ-TBr" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="28" id="AHj-DH-07E"/>
+                <constraint firstItem="GXa-dN-B3U" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="3kB-V3-saV"/>
+                <constraint firstItem="hDb-mg-cOm" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="99q-z8-iZ9"/>
+                <constraint firstItem="qzq-hd-l6W" firstAttribute="top" secondItem="GXa-dN-B3U" secondAttribute="bottom" constant="20" id="BjZ-4R-ftC"/>
                 <constraint firstItem="TJB-SZ-TBr" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="QLY-hN-zon"/>
+                <constraint firstItem="TJB-SZ-TBr" firstAttribute="top" secondItem="hDb-mg-cOm" secondAttribute="bottom" constant="15" id="fHA-db-XHa"/>
+                <constraint firstItem="hDb-mg-cOm" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="28" id="i14-cp-xxJ"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="TJB-SZ-TBr" secondAttribute="trailing" constant="32" id="oke-mb-SuC"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="qzq-hd-l6W" secondAttribute="trailing" constant="32" id="r6Y-tU-BtD"/>
-                <constraint firstItem="qzq-hd-l6W" firstAttribute="top" secondItem="TJB-SZ-TBr" secondAttribute="bottom" constant="28" id="sZ0-zw-rjY"/>
+                <constraint firstItem="GXa-dN-B3U" firstAttribute="top" secondItem="TJB-SZ-TBr" secondAttribute="bottom" constant="28" id="t6x-AF-9Eu"/>
                 <constraint firstItem="qzq-hd-l6W" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="ttP-ko-YoQ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

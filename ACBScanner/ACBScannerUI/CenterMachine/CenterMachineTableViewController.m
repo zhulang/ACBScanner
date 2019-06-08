@@ -49,7 +49,8 @@
 {
     [super viewDidAppear:animated];
     [[ACBScannerManager manager] initCenterMachineManager:self.serviceName delegate:self];
-    self.resultData = [[ACBScannerManager manager] getResultData];
+    self.resultData = [NSMutableArray array];
+    [self.resultData addObjectsFromArray:[[ACBScannerManager manager] getResultData]];
     [self.tableView reloadData];
 }
 
@@ -205,9 +206,7 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
 
 - (void)centralDidReadValueForCharacteristic:(NSDictionary *)currentRecord
 {
-    if ([ACBScannerManager manager].autoUpload == NO) {
-        [ACProgressHUD toastScuess:@"有了新数据"];
-    }
+    [ACProgressHUD toastScuess:@"有了新数据"];
     [self.resultData insertObject:currentRecord atIndex:0];
     [self.tableView reloadData];
 }

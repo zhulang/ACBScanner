@@ -343,7 +343,6 @@ static dispatch_once_t onceToken;
 {
     NSArray * arr = [NSArray arrayWithObject:data];
     NSString * jsonStr = [arr mj_JSONString];
-    
     NSURLSession * session = [NSURLSession sharedSession];
     NSURL *url = [NSURL URLWithString:self.uploadUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -426,6 +425,7 @@ static dispatch_once_t onceToken;
 {
     if (self.resultData == nil) {
         self.resultData = [NSMutableArray arrayWithCapacity:0];
+        self.peripheralUUIDSet = [NSMutableSet set];
     }
     [self.manager scanForPeripheralsWithServices:[ACBScannerManager manager].isLinkScanGun ? nil : @[[CBUUID UUIDWithString:SERVICE_UUID]] options:nil];
     if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidStartScanForPeripheralsWithServices:)]) {
@@ -539,9 +539,15 @@ static dispatch_once_t onceToken;
 {
     for (CBService * service in peripheral.services)
     {
+        NSLog(@"didDiscoverServices - %@",service);
         NSString * serviceUuid = service.UUID.UUIDString;
-        if ([serviceUuid isEqualToString:SERVICE_UUID]) {
-            [peripheral discoverCharacteristics:[ACBScannerManager manager].isLinkScanGun ? nil : @[[CBUUID UUIDWithString:CHARACTERISTIC_UUID]] forService:service];
+        if ([ACBScannerManager manager].isLinkScanGun) {
+            [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:@"2AA1"]] forService:service];
+            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverServices:)]) {
+                [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverServices:error];
+            }
+        } else if ([serviceUuid isEqualToString:SERVICE_UUID]) {
+            [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:CHARACTERISTIC_UUID]] forService:service];
             if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverServices:)]) {
                 [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverServices:error];
             }
@@ -553,6 +559,7 @@ static dispatch_once_t onceToken;
 {
     for (CBCharacteristic * characteristic in service.characteristics)
     {
+        NSLog(@"didDiscoverServices - %@",characteristic);
         NSString * characteristicUuid = characteristic.UUID.UUIDString;
         if ([ACBScannerManager manager].isLinkScanGun) {
             self.currentCharacteristic = characteristic;
@@ -581,8 +588,6 @@ static dispatch_once_t onceToken;
 {
     [characteristic.descriptors enumerateObjectsUsingBlock:^(CBDescriptor * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLog(@"CBDescriptor - %@",obj);
-        NSLog(@"CBDescriptor - %@",obj);
-        NSLog(@"CBDescriptor - %@",obj);
     }];
 }
 
@@ -592,12 +597,26 @@ static dispatch_once_t onceToken;
     if (characteristic.value == nil || self.serviceName == nil) {
         return;
     }
-    NSString * str  =[[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+    NSString * str  = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
     NSDictionary * dic = [str mj_JSONObject];
-    if (dic == nil) {
-        return;
-    }
-    if (dic) {
+    if (dic == nil && str && [str isKindOfClass:[NSString class]]) {
+        str = [str stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        str = [str stringByReplacingOccurrencesOfString:@"\0" withString:@""];
+        if (str.length == 0) return;
+        
+        NSDateFormatter * dft = [[NSDateFormatter alloc] init];
+        [dft setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        dic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":str,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
+        [self.resultData insertObject:dic atIndex:0];
+        if (self.autoUpload) {
+            [self centerMachineUploadData:dic];
+            NSLog(@"centerMachineUploadData %@",dic);
+        }
+        if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:)]) {
+            [self.centerMachineDelegate centralDidReadValueForCharacteristic:dic];
+        }
+    }else {
         @synchronized (self.resultData) {
             [self.resultData insertObject:dic atIndex:0];
             if (self.autoUpload) {
@@ -618,7 +637,9 @@ static dispatch_once_t onceToken;
     }
     else
     {
-        [self.manager cancelPeripheralConnection:peripheral];
+        if ([ACBScannerManager manager].isLinkScanGun == NO) {
+            [self.manager cancelPeripheralConnection:peripheral];
+        }
     }
 }
 
