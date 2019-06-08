@@ -139,6 +139,9 @@
     
     [alt addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"请输入扫描枪名称";
+        if ([ACBScannerManager getScannerName].length) {
+            textField.text = [ACBScannerManager getScannerName];
+        }
     }];
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {}];
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

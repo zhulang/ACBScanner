@@ -427,7 +427,7 @@ static dispatch_once_t onceToken;
     if (self.resultData == nil) {
         self.resultData = [NSMutableArray arrayWithCapacity:0];
     }
-    [self.manager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]] options:nil];
+    [self.manager scanForPeripheralsWithServices:[ACBScannerManager manager].isLinkScanGun ? nil : @[[CBUUID UUIDWithString:SERVICE_UUID]] options:nil];
     if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidStartScanForPeripheralsWithServices:)]) {
         [self.centerMachineDelegate centralDidStartScanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SERVICE_UUID]]];
     }
@@ -477,12 +477,24 @@ static dispatch_once_t onceToken;
     NSString * uuid = peripheral.identifier.UUIDString;
     @synchronized (self.peripheralArr) {
         if (![self.peripheralUUIDSet containsObject:uuid]) {
-            [self.peripheralUUIDSet addObject:uuid];
             if (self.peripheralArr && self.peripheralArr.count < [ACBScannerManager getCenterMaxInterfaceNumber]) {
-                [self.peripheralArr addObject:peripheral];
-                [self.manager connectPeripheral:peripheral options:nil];
-                if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheralsUpdate:)]) {
-                    [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
+                if ([ACBScannerManager manager].isLinkScanGun) {
+                    NSString * peripheralName = peripheral.name;
+                    if (peripheralName && [peripheralName hasPrefix:[ACBScannerManager getScannerName]]) {
+                        [self.peripheralUUIDSet addObject:uuid];
+                        [self.peripheralArr addObject:peripheral];
+                        [self.manager connectPeripheral:peripheral options:nil];
+                        if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheralsUpdate:)]) {
+                            [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
+                        }
+                    }
+                }else{
+                    [self.peripheralUUIDSet addObject:uuid];
+                    [self.peripheralArr addObject:peripheral];
+                    [self.manager connectPeripheral:peripheral options:nil];
+                    if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheralsUpdate:)]) {
+                        [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
+                    }
                 }
             }
         }
@@ -492,7 +504,10 @@ static dispatch_once_t onceToken;
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
     peripheral.delegate = self;
-    [peripheral discoverServices:@[[CBUUID UUIDWithString:SERVICE_UUID]]];
+    [peripheral discoverServices:[ACBScannerManager manager].isLinkScanGun ? nil : @[[CBUUID UUIDWithString:SERVICE_UUID]]];
+    if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidConnectPeripheral:)]) {
+        [self.centerMachineDelegate centralDidConnectPeripheral:peripheral];
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error{
@@ -526,7 +541,7 @@ static dispatch_once_t onceToken;
     {
         NSString * serviceUuid = service.UUID.UUIDString;
         if ([serviceUuid isEqualToString:SERVICE_UUID]) {
-            [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:CHARACTERISTIC_UUID]] forService:service];
+            [peripheral discoverCharacteristics:[ACBScannerManager manager].isLinkScanGun ? nil : @[[CBUUID UUIDWithString:CHARACTERISTIC_UUID]] forService:service];
             if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverServices:)]) {
                 [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverServices:error];
             }
@@ -539,8 +554,7 @@ static dispatch_once_t onceToken;
     for (CBCharacteristic * characteristic in service.characteristics)
     {
         NSString * characteristicUuid = characteristic.UUID.UUIDString;
-        if ([characteristicUuid isEqualToString:CHARACTERISTIC_UUID])
-        {
+        if ([ACBScannerManager manager].isLinkScanGun) {
             self.currentCharacteristic = characteristic;
             [peripheral readValueForCharacteristic:characteristic];
             [peripheral setNotifyValue:YES forCharacteristic:characteristic];
@@ -548,13 +562,28 @@ static dispatch_once_t onceToken;
             if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverCharacteristicsForService:error:)]) {
                 [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverCharacteristicsForService:service error:error];
             }
+        } else {
+            if ([characteristicUuid isEqualToString:CHARACTERISTIC_UUID])
+            {
+                self.currentCharacteristic = characteristic;
+                [peripheral readValueForCharacteristic:characteristic];
+                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+                [peripheral discoverDescriptorsForCharacteristic:characteristic];
+                if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheral:didDiscoverCharacteristicsForService:error:)]) {
+                    [self.centerMachineDelegate centralForPeripheral:peripheral didDiscoverCharacteristicsForService:service error:error];
+                }
+            }
         }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    
+    [characteristic.descriptors enumerateObjectsUsingBlock:^(CBDescriptor * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLog(@"CBDescriptor - %@",obj);
+        NSLog(@"CBDescriptor - %@",obj);
+        NSLog(@"CBDescriptor - %@",obj);
+    }];
 }
 
 //获取值

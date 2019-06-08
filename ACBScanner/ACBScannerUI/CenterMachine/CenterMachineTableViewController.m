@@ -193,9 +193,14 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
     [self.tableView reloadData];
 }
 
-- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
+- (void)centralDidConnectPeripheral:(CBPeripheral *)peripheral
 {
     [self.tableView reloadData];
+}
+
+- (void)centralForPeripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error
+{
+    
 }
 
 - (void)centralDidReadValueForCharacteristic:(NSDictionary *)currentRecord

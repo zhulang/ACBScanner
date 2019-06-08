@@ -58,6 +58,9 @@ NS_ASSUME_NONNULL_BEGIN
 //外设更新后回调
 - (void)centralForPeripheralsUpdate:(NSMutableArray<CBPeripheral *> *)peripheralArr;
 
+//外设连接后回调
+- (void)centralDidConnectPeripheral:(CBPeripheral *)peripheral;
+
 //链接失败的回调方法
 - (void)centralDidFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error;
 
