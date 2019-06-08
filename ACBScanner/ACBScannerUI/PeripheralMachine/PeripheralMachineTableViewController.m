@@ -46,6 +46,13 @@
 }
 
 #pragma mark - ACBScannerPeripheralDelegate methods
+//选择自上传时根据需要决定是否实现此方法
+- (void)didUpload:(NSData *)data response:(NSURLResponse *)response error:(NSError *)error
+{
+    NSString * str = [NSString stringWithFormat:@"statusCode: %zd",((NSHTTPURLResponse *)response).statusCode];
+    [ACProgressHUD toastMessage:str withImage:nil];
+}
+
 - (void)peripheralRecogniseDidFail:(NSString *)errorDescription
 {
     [ACProgressHUD toastMessage:errorDescription withImage:nil];

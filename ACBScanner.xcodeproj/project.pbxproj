@@ -17,6 +17,8 @@
 		6F3FBD632299611400E3B97C /* ACBScannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD622299611400E3B97C /* ACBScannerManager.m */; };
 		6F3FBD67229A7BAF00E3B97C /* PeripheralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */; };
 		6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */; };
+		6F8844E822ABA81D00E8AC49 /* ServiceAddressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */; };
+		6F8844E922ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */; };
 		B75002FD229D1B7400C070CC /* CenterCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B75002FC229D1B7400C070CC /* CenterCongfig.m */; };
 		B7500300229D1B8200C070CC /* ScannerOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = B75002FF229D1B8200C070CC /* ScannerOperator.m */; };
 		B7500303229D1B9300C070CC /* PeripheralCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B7500302229D1B9300C070CC /* PeripheralCongfig.m */; };
@@ -68,6 +70,9 @@
 		6F3FBD64229A7BAF00E3B97C /* PeripheralSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralSettingViewController.h; sourceTree = "<group>"; };
 		6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralSettingViewController.m; sourceTree = "<group>"; };
 		6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeripheralSettingViewController.xib; sourceTree = "<group>"; };
+		6F8844E522ABA81D00E8AC49 /* ServiceAddressSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceAddressSettingViewController.h; sourceTree = "<group>"; };
+		6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceAddressSettingViewController.m; sourceTree = "<group>"; };
+		6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceAddressSettingViewController.xib; sourceTree = "<group>"; };
 		B75002FB229D1B7400C070CC /* CenterCongfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CenterCongfig.h; sourceTree = "<group>"; };
 		B75002FC229D1B7400C070CC /* CenterCongfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenterCongfig.m; sourceTree = "<group>"; };
 		B75002FE229D1B8200C070CC /* ScannerOperator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerOperator.h; sourceTree = "<group>"; };
@@ -262,6 +267,9 @@
 				6F3FBD41229833B400E3B97C /* CenterMachineSettingViewController.h */,
 				6F3FBD42229833B400E3B97C /* CenterMachineSettingViewController.m */,
 				6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */,
+				6F8844E522ABA81D00E8AC49 /* ServiceAddressSettingViewController.h */,
+				6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */,
+				6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */,
 				B76484FD22A8E9EB006A276B /* SettingViewController.h */,
 				B76484FE22A8E9EB006A276B /* SettingViewController.m */,
 			);
@@ -377,6 +385,7 @@
 				6F3FBD5C22993BE800E3B97C /* CodeTableViewCell.xib in Resources */,
 				B752D1CB2296962A0035712F /* Assets.xcassets in Resources */,
 				6F3FBD45229833B400E3B97C /* CenterMachineSettingViewController.xib in Resources */,
+				6F8844E922ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib in Resources */,
 				6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */,
 				6F3FBD57229901A500E3B97C /* Podfile in Resources */,
 				B752D1C9229696290035712F /* Main.storyboard in Resources */,
@@ -451,6 +460,7 @@
 				B75002FD229D1B7400C070CC /* CenterCongfig.m in Sources */,
 				6F3FBD5B22993BE800E3B97C /* CodeTableViewCell.m in Sources */,
 				B76484FF22A8E9EB006A276B /* SettingViewController.m in Sources */,
+				6F8844E822ABA81D00E8AC49 /* ServiceAddressSettingViewController.m in Sources */,
 				6F3FBD67229A7BAF00E3B97C /* PeripheralSettingViewController.m in Sources */,
 				B764850222A8FF13006A276B /* WKWebViewController.m in Sources */,
 				6F3FBD44229833B400E3B97C /* CenterMachineSettingViewController.m in Sources */,

@@ -23,7 +23,7 @@
 
 - (void)setTorchAuto:(BOOL)torchAuto
 {
-    _torchOn = torchAuto;
+    _torchAuto = torchAuto;
 }
 
 - (void)setFps:(float)fps

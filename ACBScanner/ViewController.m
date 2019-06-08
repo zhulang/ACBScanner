@@ -61,6 +61,11 @@
 }
 
 - (IBAction)asCenterMachine:(UIButton *)sender {
+    if ( [ACBScannerManager manager].autoUpload && ([ACBScannerManager manager].uploadUrl == nil || ![[ACBScannerManager manager].uploadUrl hasPrefix:@"http"])) {
+        [ACProgressHUD toastMessage:@"请在设置里正确填写好服务器地址" withImage:nil];
+        return;
+    }
+    
     if (self.textField.text) {
         NSString * cubbId = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         if (cubbId.length == 0) {
@@ -81,16 +86,16 @@
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
             if (granted) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self open];
+                    [self open:NO];
                 });
             }
         }];
         return;
     }
-    [self open];
+    [self open:NO];
 }
 
-- (void)open
+- (void)open:(BOOL)uploadSelf
 {
     if (self.textField.text) {
         NSString * cubbId = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -100,16 +105,31 @@
             [vc addAction:act];
             [self presentViewController:vc animated:YES completion:nil];
         }else{
+            [ACBScannerManager manager].uploadSelf = uploadSelf;
             PeripheralMachineTableViewController * vc = [[PeripheralMachineTableViewController alloc] initWithServiceName:cubbId];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
-
 }
 
 - (IBAction)uploadPeripheralSelf:(UIButton *)sender
 {
-    
+    if ([ACBScannerManager manager].uploadUrl == nil || ![[ACBScannerManager manager].uploadUrl hasPrefix:@"http"]) {
+        [ACProgressHUD toastMessage:@"请在设置里正确填写好服务器地址" withImage:nil];
+        return;
+    }
+    if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized) {
+        [ACProgressHUD toastMessage:@"请打开设想机权限" withImage:nil];
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self open:YES];
+                });
+            }
+        }];
+        return;
+    }
+    [self open:YES];
 }
 
 - (IBAction)connectScan:(UIButton *)sender

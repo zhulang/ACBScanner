@@ -14,8 +14,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *maxConnectSlider;
 @property (weak, nonatomic) IBOutlet UILabel *maxCacheLabel;
 @property (weak, nonatomic) IBOutlet UISlider *maxCacheSlider;
-@property (weak, nonatomic) IBOutlet UITextField *uploadUrltextField;
-@property (weak, nonatomic) IBOutlet UITextField *dataUrltextField;
+@property (weak, nonatomic) IBOutlet UILabel *autoUploadLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *autoUploadSwitch;
 @end
 
 @implementation CenterMachineSettingViewController
@@ -23,19 +23,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"中心设备参数设置";
-    UITapGestureRecognizer * tapView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fieldResignFirstResponder)];
-    [self.view addGestureRecognizer:tapView];
+    
     self.maxConnectSlider.value = [ACBScannerManager manager].maxInterfaceNumber;
     self.maxConnectLabel.text = [NSString stringWithFormat:@"最大连接扫描仪个数：%.0f",self.maxConnectSlider.value];
     
     self.maxCacheSlider.value = [ACBScannerManager manager].maxCacheNumber;
     self.maxCacheLabel.text = [NSString stringWithFormat:@"最大缓存记录条数：%.0f",self.maxCacheSlider.value];
     
-    self.uploadUrltextField.text = [ACBScannerManager manager].uploadUrl;
-    self.dataUrltextField.text = [ACBScannerManager manager].dataUrl;
-    
-    self.uploadUrltextField.delegate = self;
-    self.dataUrltextField.delegate = self;
+    self.autoUploadSwitch.on = [ACBScannerManager manager].autoUpload;
+    self.autoUploadLabel.text = [NSString stringWithFormat:@"自动上传：%@",self.autoUploadSwitch.on ? @"开" : @"关"];
 }
 
 - (IBAction)maxConnectDidChange:(UISlider *)sender {
@@ -46,24 +42,6 @@
 - (IBAction)maxCacheDidChange:(UISlider *)sender {
     self.maxCacheLabel.text = [NSString stringWithFormat:@"最大缓存记录条数：%.0f",sender.value];
     [ACBScannerManager manager].maxCacheNumber = sender.value;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString * str = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if ([textField isEqual:self.dataUrltextField]) {
-        [ACBScannerManager manager].dataUrl = str;
-    }
-    if ([textField isEqual:self.uploadUrltextField]) {
-        [ACBScannerManager manager].uploadUrl = str;
-    }
-    return YES;
-}
-
-- (void)fieldResignFirstResponder
-{
-    [self.uploadUrltextField resignFirstResponder];
-    [self.dataUrltextField resignFirstResponder];
 }
 
 - (IBAction)clearCacheData:(UIButton *)sender {
@@ -79,6 +57,10 @@
     [self presentViewController:alert animated:YES completion:^{
         
     }];
+}
+- (IBAction)autoUploadValueDidChange:(UISwitch *)sender {
+    [ACBScannerManager setCenterAutoUpload:sender.on];
+    self.autoUploadLabel.text = [NSString stringWithFormat:@"自动上传：%@",sender.on ? @"开" : @"关"];
 }
 
 @end

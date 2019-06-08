@@ -16,7 +16,7 @@
 @interface CenterMachineTableViewController ()<ACBScannerCenterMachineDelegate,CodeTableViewCellDelegate>
 @property (nonatomic,copy) NSString * serviceName;
 @property (nonatomic,strong) NSMutableArray * peripheralArr;
-@property (nonatomic,strong) NSArray * resultData;
+@property (nonatomic,strong) NSMutableArray * resultData;
 @end
 
 @implementation CenterMachineTableViewController
@@ -33,7 +33,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"中心设备";
-    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(uploadData)]];
+    
+    if([ACBScannerManager manager].autoUpload == NO)
+    {
+        self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(uploadData)]];
+    }
+    
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CodeTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([CodeTableViewCell class])];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -113,7 +118,7 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
         }
         cell.delegate = self;
         NSDictionary * dic = self.resultData[indexPath.row];
-        cell.info = dic;
+        cell.info = dic[self.serviceName];
         return cell;
     }else{
         return [UITableViewCell new];
@@ -186,10 +191,10 @@ static  NSString * peripheralCell = @"CenterMachineTableViewController";
     [self.tableView reloadData];
 }
 
-- (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value
+- (void)centralDidReadValueForCharacteristic:(NSDictionary *)currentRecord
 {
     [ACProgressHUD toastScuess:@"有了新数据"];
-    self.resultData = resultData;
+    [self.resultData insertObject:currentRecord atIndex:0];
     [self.tableView reloadData];
 }
 

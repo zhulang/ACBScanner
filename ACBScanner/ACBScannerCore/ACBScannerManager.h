@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)peripheralRecogniseDidFail:(NSString *)errorDescription;
 
+/**
+ @ 自上传模式下，上报数据后回调
+ */
+- (void)didUpload:(NSData *)data response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error;
+
 @end
 
 @protocol ACBScannerCenterMachineDelegate <NSObject>
@@ -45,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)centralDidUpdateStatePoweredOn;
 
 //成功读取值之后中心设备回调
-- (void)centralDidReadValueForCharacteristic:(NSArray *)resultData currentRecord:(NSDictionary *)value;
+- (void)centralDidReadValueForCharacteristic:(NSDictionary *)currentRecord;
 
 //外设更新后回调
 - (void)centralForPeripheralsUpdate:(NSMutableArray<CBPeripheral *> *)peripheralArr;
@@ -76,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)connectPeripheral:(CBPeripheral *)peripheral;
 
-- (NSArray *)getResultData;
+- (NSMutableArray *)getResultData;
 
 - (void)removeAllServices;
 
@@ -209,6 +214,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)setOperatorNumber:(NSString *)numStr;
 + (NSString *)getOperatorNumber;
+
+/**
+ @ if uploadSelf == YES,upload data to service by the current device
+ @ 如果设置为YES,由当前设备将扫描到数据上传
+ */
+@property (nonatomic, assign) BOOL uploadSelf;
 
 /**
  @ the max value of center machine connects

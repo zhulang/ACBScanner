@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CenterMachineSettingViewController">
             <connections>
-                <outlet property="dataUrltextField" destination="GrI-In-hG8" id="gam-Xh-enK"/>
+                <outlet property="autoUploadLabel" destination="EHT-0p-JUH" id="YVe-XC-5Jk"/>
+                <outlet property="autoUploadSwitch" destination="MTg-qs-u3g" id="unl-a8-vaI"/>
                 <outlet property="maxCacheLabel" destination="f8U-HA-BVH" id="6y4-tV-yBQ"/>
                 <outlet property="maxCacheSlider" destination="3kH-CY-P4l" id="ZiR-DD-YEF"/>
                 <outlet property="maxConnectLabel" destination="t5e-Zs-Sey" id="fql-G0-M2T"/>
                 <outlet property="maxConnectSlider" destination="Xpw-vb-R41" id="KPb-ec-GmS"/>
-                <outlet property="uploadUrltextField" destination="79A-Et-CsV" id="QCY-YG-ACU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -59,24 +59,6 @@
                         <action selector="maxCacheDidChange:" destination="-1" eventType="valueChanged" id="D6J-hh-F6u"/>
                     </connections>
                 </slider>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入上报数据地址" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="79A-Et-CsV">
-                    <rect key="frame" x="32" y="214" width="311" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="Aj7-Qr-bgI"/>
-                    </constraints>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入查看上报数据地址" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GrI-In-hG8">
-                    <rect key="frame" x="32" y="286" width="311" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="Knk-n1-EM2"/>
-                    </constraints>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wm9-E0-qwN">
                     <rect key="frame" x="137.5" y="617" width="100" height="30"/>
                     <constraints>
@@ -88,6 +70,25 @@
                         <action selector="clearCacheData:" destination="-1" eventType="touchUpInside" id="fDg-lq-feh"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自动上传" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHT-0p-JUH">
+                    <rect key="frame" x="32" y="214" width="61.5" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="56i-fe-1cG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MTg-qs-u3g">
+                    <rect key="frame" x="32" y="240" width="49" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="M5l-fr-DkB"/>
+                        <constraint firstAttribute="width" constant="47" id="ykI-db-1Nk"/>
+                    </constraints>
+                    <connections>
+                        <action selector="autoUploadValueDidChange:" destination="-1" eventType="valueChanged" id="PgB-pT-87Z"/>
+                    </connections>
+                </switch>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -96,19 +97,17 @@
                 <constraint firstItem="t5e-Zs-Sey" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="Fhe-BW-WYP"/>
                 <constraint firstItem="t5e-Zs-Sey" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="28" id="GOr-07-7iZ"/>
                 <constraint firstItem="Xpw-vb-R41" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="KZo-5V-js4"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="79A-Et-CsV" secondAttribute="trailing" constant="32" id="L8W-Zv-Knf"/>
-                <constraint firstItem="79A-Et-CsV" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="SrE-wK-UfJ"/>
+                <constraint firstItem="EHT-0p-JUH" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="O6a-AX-Bhx"/>
+                <constraint firstItem="MTg-qs-u3g" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="SoG-jl-Nr7"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="3kH-CY-P4l" secondAttribute="trailing" constant="32" id="Yvd-yS-ZsA"/>
-                <constraint firstItem="79A-Et-CsV" firstAttribute="top" secondItem="3kH-CY-P4l" secondAttribute="bottom" constant="28" id="dFj-Wb-OdO"/>
                 <constraint firstItem="3kH-CY-P4l" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="dWi-th-TMd"/>
                 <constraint firstItem="Xpw-vb-R41" firstAttribute="top" secondItem="t5e-Zs-Sey" secondAttribute="bottom" constant="8" id="hOo-2D-Ky8"/>
-                <constraint firstItem="GrI-In-hG8" firstAttribute="top" secondItem="79A-Et-CsV" secondAttribute="bottom" constant="28" id="hW6-4q-QTg"/>
-                <constraint firstItem="GrI-In-hG8" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="hq7-tN-hkg"/>
+                <constraint firstItem="MTg-qs-u3g" firstAttribute="top" secondItem="EHT-0p-JUH" secondAttribute="bottom" constant="8" id="kAd-vR-7ag"/>
                 <constraint firstItem="f8U-HA-BVH" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="lDQ-Ao-CxR"/>
                 <constraint firstItem="Wm9-E0-qwN" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="plc-6B-yuR"/>
+                <constraint firstItem="EHT-0p-JUH" firstAttribute="top" secondItem="3kH-CY-P4l" secondAttribute="bottom" constant="28" id="pwo-PX-W8O"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Xpw-vb-R41" secondAttribute="trailing" constant="32" id="sdP-0b-q2A"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="Wm9-E0-qwN" secondAttribute="bottom" constant="20" id="uQi-7v-3Wp"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="GrI-In-hG8" secondAttribute="trailing" constant="32" id="ufe-aA-K5O"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="130.40000000000001" y="150.67466266866569"/>

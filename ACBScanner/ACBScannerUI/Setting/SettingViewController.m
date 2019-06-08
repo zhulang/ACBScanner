@@ -9,6 +9,7 @@
 #import "SettingViewController.h"
 #import "PeripheralSettingViewController.h"
 #import "CenterMachineSettingViewController.h"
+#import "ServiceAddressSettingViewController.h"
 #import "ACBScannerManager.h"
 
 @interface SettingViewController ()
@@ -43,6 +44,9 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if(indexPath.row == 1){
             PeripheralSettingViewController * vc = [[PeripheralSettingViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if(indexPath.row == 2){
+            ServiceAddressSettingViewController * vc = [[ServiceAddressSettingViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

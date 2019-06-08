@@ -70,7 +70,7 @@ static dispatch_once_t onceToken;
     centerConfig.maxCacheNumber = 2000;
     centerConfig.uploadUrl = @"";
     centerConfig.dataUrl = @"";
-    centerConfig.autoUpload = YES;
+    centerConfig.autoUpload = NO;
     instance.centerConfig = centerConfig;
     ScannerOperator * people = [[ScannerOperator alloc] init];
     people.name = @"";
@@ -118,9 +118,12 @@ static dispatch_once_t onceToken;
     self.peripheralDelegate = nil;
 }
 
-- (NSArray *)getResultData
+- (NSMutableArray *)getResultData
 {
-    return self.resultData;
+    if (self.resultData) {
+        return self.resultData;
+    }
+    return [NSMutableArray array];
 }
 
 - (void)removeAllServices
@@ -177,7 +180,14 @@ static dispatch_once_t onceToken;
         self.code = [obj stringValue];
         if (self.code) {
             [self.session stopRunning];
-            [self sendData];
+            if (self.uploadSelf)
+            {
+                [self uploadData];
+            }
+            else
+            {
+                [self sendData];
+            }
         }
     } else {
         if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralRecogniseDidFail:)]) {
@@ -302,6 +312,33 @@ static dispatch_once_t onceToken;
     
 }
 
+- (void)uploadData
+{
+    NSDateFormatter * dft = [[NSDateFormatter alloc] init];
+    [dft setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDictionary * dataDic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":self.code,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
+    NSArray * arr = [NSArray arrayWithObject:dataDic];
+    NSString * jsonStr = [arr mj_JSONString];
+    
+    NSURLSession * session = [NSURLSession sharedSession];
+    NSURL *url = [NSURL URLWithString:self.uploadUrl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(didUpload:response:error:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.peripheralDelegate didUpload:data response:response error:error];
+            });
+        }
+        sleep(60.0 / [ACBScannerManager getPeripheralFps]);
+        
+        [self.session startRunning];
+        [self resetTorch];
+    }];
+    [dataTask resume];
+}
+
 - (void)sendData
 {
     if (self.serviceName == nil || self.code == nil) {
@@ -318,7 +355,9 @@ static dispatch_once_t onceToken;
                 [self.peripheralDelegate peripheralDidSendJsonString:jsonStr status:YES];
             }
             sleep(60.0 / [ACBScannerManager getPeripheralFps]);
+            
             [self.session startRunning];
+            [self resetTorch];
         }else{
             if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralDidSendJsonString:status:)]) {
                 [self.peripheralDelegate peripheralDidSendJsonString:jsonStr status:NO];
@@ -328,6 +367,7 @@ static dispatch_once_t onceToken;
         NSLog(@"未找到中心设备");
         sleep(60.0 / [ACBScannerManager getPeripheralFps]);
         [self.session startRunning];
+        [self resetTorch];
     }
 }
 
@@ -514,12 +554,12 @@ static dispatch_once_t onceToken;
     if (dic == nil) {
         return;
     }
-    NSDictionary * value = dic[self.serviceName];
-    if (value) {
+//    NSDictionary * value = dic[self.serviceName];
+    if (dic) {
         @synchronized (self.resultData) {
-            [self.resultData insertObject:value atIndex:0];
-            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:currentRecord:)]) {
-                [self.centerMachineDelegate centralDidReadValueForCharacteristic:self.resultData currentRecord:value];
+            [self.resultData insertObject:dic atIndex:0];
+            if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:)]) {
+                [self.centerMachineDelegate centralDidReadValueForCharacteristic:dic];
             }
         }
     }
