@@ -74,6 +74,7 @@
             [vc addAction:act];
             [self presentViewController:vc animated:YES completion:nil];
         }else{
+            [ACBScannerManager manager].isLinkScanGun = NO;
             CenterMachineTableViewController * vc = [[CenterMachineTableViewController alloc] initWithServiceName:cubbId];
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -134,7 +135,36 @@
 
 - (IBAction)connectScan:(UIButton *)sender
 {
-
+    UIAlertController * alt = [UIAlertController alertControllerWithTitle:@"扫描枪名称" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alt addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入扫描枪名称";
+    }];
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {}];
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField * textField = alt.textFields[0];
+        NSString * scannerName = textField.text;
+        if (scannerName.length) {
+            [ACBScannerManager setScannerName:scannerName];
+            if (self.textField.text) {
+                NSString * cubbId = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+                if (cubbId.length == 0) {
+                    UIAlertAction * act = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+                    UIAlertController * vc = [UIAlertController alertControllerWithTitle:@" ❗❗" message:@"请先输入中心设备服务名称" preferredStyle:UIAlertControllerStyleAlert];
+                    [vc addAction:act];
+                    [self presentViewController:vc animated:YES completion:nil];
+                }else{
+                    [ACBScannerManager manager].isLinkScanGun = YES;
+                    CenterMachineTableViewController * vc = [[CenterMachineTableViewController alloc] initWithServiceName:cubbId];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+        }
+    }];
+    [alt addAction:act1];
+    [alt addAction:act2];
+    
+    [self presentViewController:alt animated:YES completion:^{}];
 }
 
 - (void)fieldResignFirstResponder

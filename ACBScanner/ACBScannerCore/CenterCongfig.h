@@ -39,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) BOOL autoUpload;
 
+/**
+ @ sannerName , the name of the really scanner which is not a mobile phone
+ */
+@property (nonatomic, copy) NSString * scannerName;
+
 @end
 
 NS_ASSUME_NONNULL_END

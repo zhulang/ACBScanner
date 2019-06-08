@@ -36,4 +36,9 @@
     _autoUpload = autoUpload;
 }
 
+- (void)setScannerName:(NSString *)scannerName
+{
+    _scannerName = scannerName;
+}
+
 @end

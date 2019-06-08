@@ -339,6 +339,30 @@ static dispatch_once_t onceToken;
     [dataTask resume];
 }
 
+- (void)uploadData:(NSDictionary *)data
+{
+    NSArray * arr = [NSArray arrayWithObject:data];
+    NSString * jsonStr = [arr mj_JSONString];
+    
+    NSURLSession * session = [NSURLSession sharedSession];
+    NSURL *url = [NSURL URLWithString:self.uploadUrl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(didUpload:response:error:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.peripheralDelegate didUpload:data response:response error:error];
+            });
+        }
+        sleep(60.0 / [ACBScannerManager getPeripheralFps]);
+        
+        [self.session startRunning];
+        [self resetTorch];
+    }];
+    [dataTask resume];
+}
+
 - (void)sendData
 {
     if (self.serviceName == nil || self.code == nil) {
@@ -364,7 +388,6 @@ static dispatch_once_t onceToken;
             }
         }
     }else{
-        NSLog(@"未找到中心设备");
         sleep(60.0 / [ACBScannerManager getPeripheralFps]);
         [self.session startRunning];
         [self resetTorch];
@@ -434,19 +457,14 @@ static dispatch_once_t onceToken;
 {
     switch (central.state) {
         case CBManagerStateUnknown:
-            NSLog(@"CBManagerStateUnknown");
             break;
         case CBManagerStateResetting:
-            NSLog(@"CBManagerStateResetting");
             break;
         case CBManagerStateUnsupported:
-            NSLog(@"CBManagerStateUnsupported");
             break;
         case CBManagerStateUnauthorized:
-            NSLog(@"CBManagerStateUnauthorized");
             break;
         case CBManagerStatePoweredOff:
-            NSLog(@"CBManagerStatePoweredOff");
             break;
         case CBManagerStatePoweredOn:
             if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidUpdateStatePoweredOn)]) {
@@ -554,7 +572,6 @@ static dispatch_once_t onceToken;
     if (dic == nil) {
         return;
     }
-//    NSDictionary * value = dic[self.serviceName];
     if (dic) {
         @synchronized (self.resultData) {
             [self.resultData insertObject:dic atIndex:0];
@@ -633,6 +650,14 @@ static dispatch_once_t onceToken;
 {
     if (manager.scannerConfig.centerConfig) {
         manager.scannerConfig.centerConfig.autoUpload = autoUpload;
+    }
+    [ACBScannerCongfig archiver];
+}
+
++ (void)setScannerName:(NSString *)scannerName
+{
+    if (manager.scannerConfig.centerConfig) {
+        manager.scannerConfig.centerConfig.scannerName = scannerName;
     }
     [ACBScannerCongfig archiver];
 }
@@ -731,6 +756,11 @@ static dispatch_once_t onceToken;
     [ACBScannerManager setCenterAutoUpload:autoUpload];
 }
 
+- (void)setSannerName:(NSString *)sannerName
+{
+
+}
+
 - (void)setBrightness:(float)brightness
 {
     [ACBScannerManager setPeripheralBrightness:brightness];
@@ -805,6 +835,14 @@ static dispatch_once_t onceToken;
         return manager.scannerConfig.centerConfig.autoUpload;
     }
     return NO;
+}
+
++ (NSString *)getScannerName
+{
+    if (manager.scannerConfig.centerConfig) {
+        return manager.scannerConfig.centerConfig.scannerName;
+    }
+    return @"";
 }
 
 + (float)getPeripheralBrightness

@@ -167,6 +167,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)getCenterAutoUpload;
 
 /**
+ @ sannerName , the name of the really scanner which is not a mobile phone
+ @ 设置扫描枪名称
+ */
++ (void)setScannerName:(NSString *)scannerName;
++ (NSString *)getScannerName;
+
+/**
  @ brightness ,the value between 0.01 to 1 ,default is 0.5
  @ 设置补光亮度，值在0到1之间，默认值0.5
  */
@@ -216,6 +223,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getOperatorNumber;
 
 /**
+ @ isLinkScanGun,link the real scanner gun which is not a mobile phone
+ @ 是否连接外部真实版扫描枪
+ */
+@property (nonatomic, assign) BOOL isLinkScanGun;
+
+/**
  @ if uploadSelf == YES,upload data to service by the current device
  @ 如果设置为YES,由当前设备将扫描到数据上传
  */
@@ -250,6 +263,12 @@ NS_ASSUME_NONNULL_BEGIN
  @ 中心设备是否在收到数据时自动将数据上传
  */
 @property (nonatomic, assign) BOOL autoUpload;
+
+/**
+ @ sannerName , the name of the really scanner which is not a mobile phone
+ @ 扫描枪名称
+ */
+@property (nonatomic, copy) NSString * sannerName;
 
 /**
  @ brightness
