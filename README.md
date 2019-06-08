@@ -122,15 +122,25 @@ SDK链接：[SDK链接][2]
 		
 * API
 
-	isLinkScanGun 是否连接外部真实版扫描枪，用于连接扫描枪模式
+	isLinkScanGun
 	
-	uploadSelf 如果设置为YES,由当前设备将扫描到数据上传 ，用于自上传模式
+	是否连接外部真实版扫描枪，用于连接扫描枪模式
 	
-	serviceName 中心设备服务名称，除真实扫描枪以外，其他配置或模式下的设备都需要填写服务名称
+	uploadSelf 
 	
-	ACBScannerPeripheralDelegate 外设代理方法，当选取 扫描仪 或 自上传 模式时，需要实现这个代理方法集
+	如果设置为YES,由当前设备将扫描到数据上传 ，用于自上传模式
+	
+	serviceName 
+	
+	中心设备服务名称，除真实扫描枪以外，其他配置或模式下的设备都需要填写服务名称
+	
+	ACBScannerPeripheralDelegate 
+	
+	外设代理方法，当选取 扫描仪 或 自上传 模式时，需要实现这个代理方法集
 
-	ACBScannerCenterMachineDelegate 中心代理方法，当选取 中心设备 或 连接扫描枪 模式时，需要实现这个代理方法集
+	ACBScannerCenterMachineDelegate 
+	
+	中心代理方法，当选取 中心设备 或 连接扫描枪 模式时，需要实现这个代理方法集
 	
 	连接指定的外部设备
 	
