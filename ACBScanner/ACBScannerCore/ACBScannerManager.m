@@ -362,8 +362,13 @@ static dispatch_once_t onceToken;
     request.HTTPMethod = @"POST";
     request.HTTPBody = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (handler) {
-            handler(error ? NO : YES,error ? error.description : @"上传成功");
+        if (handler && [response isKindOfClass:[NSHTTPURLResponse class]]) {
+            NSHTTPURLResponse * res = (NSHTTPURLResponse *)response;
+            if (res.statusCode == 200) {
+                handler(error ? NO : YES,error ? error.description : @"上传成功");
+            }else{
+                handler(NO ,error ? error.description : [NSString stringWithFormat:@"statusCode == %zd",res.statusCode]);
+            }
         }
         if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(didUpload:response:error:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
