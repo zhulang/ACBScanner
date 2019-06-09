@@ -10,6 +10,39 @@
 #import "ACBScannerManager.h"
 #import "ACProgressHUD.h"
 
+//config
+//archiver
+//peripheralDidStopScanning
+//peripheralDidStartScanning
+//peripheralRecogniseDidFail
+//connectPeripheral
+//getResultData
+//removeAllServices
+//beginScanningBarCode
+//stopScanningBarCode
+//beginScanningPeripheral
+//stopScanningPeripheral
+//manager
+//resetConfig
+//setCenterMaxInterfaceNumber
+//getCenterMaxInterfaceNumber
+//setCenterMaxCacheNumber
+//getCenterMaxCacheNumber
+//setCenterUploadUrl
+//getCenterUploadUrl
+//setCenterDataUrl
+//getCenterDataUrl
+//setCenterAutoUpload
+//getCenterAutoUpload
+//setScannerName
+//getScannerName
+//setPeripheralBrightness
+//getPeripheralBrightness
+//setPeripheralTorchOn
+//getPeripheralTorchOn
+//setPeripheralTorchAuto
+//getPeripheralTorchAuto
+
 @interface AppDelegate ()
 
 @end

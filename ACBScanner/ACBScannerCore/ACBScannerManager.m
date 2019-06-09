@@ -23,7 +23,7 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
 @property (nonatomic,strong) CBCentral * central;
 @property (nonatomic,strong) CBPeripheralManager * peripheralManager;
 @property (nonatomic,copy) NSString * code;
-
+@property (nonatomic,copy) NSString * previousCode;
 @property (nonatomic,strong) NSMutableArray * brightnessVlaueArr;
 @property (nonatomic,strong) UIView * preview;
 @property (nonatomic,strong) AVCaptureDevice * device;
@@ -192,6 +192,13 @@ static dispatch_once_t onceToken;
     if (metadataObjects != nil && metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *obj = metadataObjects[0];
         self.code = [obj stringValue];
+        if (self.previousCode && [self.previousCode isEqualToString:self.code]) {
+            if (self.peripheralDelegate && [self.peripheralDelegate respondsToSelector:@selector(peripheralRecogniseSameTwice)]) {
+                [self.peripheralDelegate peripheralRecogniseSameTwice];
+                return;
+            }
+        }
+        self.previousCode = self.code;
         if (self.code) {
             [self.session stopRunning];
             if (self.uploadSelf)

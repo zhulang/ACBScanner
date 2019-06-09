@@ -42,6 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)didUpload:(NSData *)data response:(NSURLResponse * _Nullable)response error:(NSError * _Nullable)error;
 
+/**
+ @ 连续两次扫描数据一样回调方法
+ */
+- (void)peripheralRecogniseSameTwice;
+
 @end
 
 @protocol ACBScannerCenterMachineDelegate <NSObject>
