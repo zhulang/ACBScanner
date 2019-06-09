@@ -19,6 +19,7 @@
 		6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */; };
 		6F8844E822ABA81D00E8AC49 /* ServiceAddressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */; };
 		6F8844E922ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */; };
+		6FB6A9F722AC3906009E41B3 /* func.list in Resources */ = {isa = PBXBuildFile; fileRef = 6FB6A9F622AC3906009E41B3 /* func.list */; };
 		B75002FD229D1B7400C070CC /* CenterCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B75002FC229D1B7400C070CC /* CenterCongfig.m */; };
 		B7500300229D1B8200C070CC /* ScannerOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = B75002FF229D1B8200C070CC /* ScannerOperator.m */; };
 		B7500303229D1B9300C070CC /* PeripheralCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B7500302229D1B9300C070CC /* PeripheralCongfig.m */; };
@@ -73,6 +74,10 @@
 		6F8844E522ABA81D00E8AC49 /* ServiceAddressSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceAddressSettingViewController.h; sourceTree = "<group>"; };
 		6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceAddressSettingViewController.m; sourceTree = "<group>"; };
 		6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceAddressSettingViewController.xib; sourceTree = "<group>"; };
+		6FB6A9F422AC380B009E41B3 /* confuse.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = confuse.sh; sourceTree = "<group>"; };
+		6FB6A9F622AC3906009E41B3 /* func.list */ = {isa = PBXFileReference; lastKnownFileType = text; path = func.list; sourceTree = "<group>"; };
+		6FB6A9F822AC3939009E41B3 /* codeObfuscation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codeObfuscation.h; sourceTree = "<group>"; };
+		6FB6A9F922AC3A7B009E41B3 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B75002FB229D1B7400C070CC /* CenterCongfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CenterCongfig.h; sourceTree = "<group>"; };
 		B75002FC229D1B7400C070CC /* CenterCongfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenterCongfig.m; sourceTree = "<group>"; };
 		B75002FE229D1B8200C070CC /* ScannerOperator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerOperator.h; sourceTree = "<group>"; };
@@ -157,6 +162,16 @@
 			path = ACBScannerCore;
 			sourceTree = "<group>";
 		};
+		6FB6A9F322AC37B3009E41B3 /* CodeObfuscation */ = {
+			isa = PBXGroup;
+			children = (
+				6FB6A9F422AC380B009E41B3 /* confuse.sh */,
+				6FB6A9F622AC3906009E41B3 /* func.list */,
+				6FB6A9F822AC3939009E41B3 /* codeObfuscation.h */,
+			);
+			path = CodeObfuscation;
+			sourceTree = "<group>";
+		};
 		71AE6D595C34F8A0AF1591CC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +217,8 @@
 		B752D1B5229696290035712F = {
 			isa = PBXGroup;
 			children = (
+				6FB6A9F922AC3A7B009E41B3 /* PrefixHeader.pch */,
+				6FB6A9F322AC37B3009E41B3 /* CodeObfuscation */,
 				B752D1C0229696290035712F /* ACBScanner */,
 				B752D1D92296962A0035712F /* ACBScannerTests */,
 				B752D1E42296962A0035712F /* ACBScannerUITests */,
@@ -288,6 +305,7 @@
 				B752D1BB229696290035712F /* Frameworks */,
 				B752D1BC229696290035712F /* Resources */,
 				2304C14EC1D766F3D21E0421 /* [CP] Copy Pods Resources */,
+				6FB6A9F522AC3858009E41B3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -386,6 +404,7 @@
 				B752D1CB2296962A0035712F /* Assets.xcassets in Resources */,
 				6F3FBD45229833B400E3B97C /* CenterMachineSettingViewController.xib in Resources */,
 				6F8844E922ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib in Resources */,
+				6FB6A9F722AC3906009E41B3 /* func.list in Resources */,
 				6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */,
 				6F3FBD57229901A500E3B97C /* Podfile in Resources */,
 				B752D1C9229696290035712F /* Main.storyboard in Resources */,
@@ -430,6 +449,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ACBScanner/Pods-ACBScanner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		6FB6A9F522AC3858009E41B3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$PROJECT_DIR/CodeObfuscation/confuse.sh\n\n";
 		};
 		92836A82EB3478311BD64441 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -643,15 +679,19 @@
 			baseConfigurationReference = D328451ED3B647DB1A71BA0A /* Pods-ACBScanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YHNH9FN643;
+				DEVELOPMENT_TEAM = QRM8R826M7;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
 				INFOPLIST_FILE = ACBScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JOYEA.ACBScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.watchdog.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -661,15 +701,19 @@
 			baseConfigurationReference = 646E7A9012C8F24E3667D49C /* Pods-ACBScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YHNH9FN643;
+				DEVELOPMENT_TEAM = QRM8R826M7;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
 				INFOPLIST_FILE = ACBScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JOYEA.ACBScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.watchdog.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

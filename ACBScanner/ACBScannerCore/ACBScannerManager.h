@@ -87,6 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)connectPeripheral:(CBPeripheral *)peripheral;
 
+//获取中心设备的所有保存的扫描结果
 - (NSMutableArray *)getResultData;
 
 - (void)removeAllServices;
@@ -114,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  @ serviceName，服务名称
- @ viewController，中设代理
+ @ viewController，中心设备的代理
  */
 - (void)initCenterMachineManager:(NSString *)serviceName delegate:(id<ACBScannerCenterMachineDelegate>)viewController;
 
