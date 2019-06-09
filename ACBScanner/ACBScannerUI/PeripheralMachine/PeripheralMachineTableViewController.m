@@ -58,6 +58,11 @@
     [ACProgressHUD toastMessage:errorDescription withImage:nil];
 }
 
+- (void)peripheralRecogniseSameTwice
+{
+    [ACProgressHUD toastMessage:@"和上一次扫描结果一样" withImage:nil];
+}
+
 - (void)peripheralDidStopScanning
 {
     [ACProgressHUD toastMessage:@"停止扫描" withImage:nil];
