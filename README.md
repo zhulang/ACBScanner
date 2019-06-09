@@ -51,9 +51,11 @@ WatchDog
 	
 ## 链接
 
-   APP链接：[APP链接][1]
+   使用视频连接：[https://v.youku.com/v_show/id_XNDIyMTU0MjA2OA==.html?spm=a2hzp.8253876.0.0&f=52199188][1] 
 
-   SDK链接：[SDK链接][2]
+   APP链接：敬请期待
+
+   SDK链接：敬请期待
 	
 ## 开发者文档
 
@@ -406,6 +408,5 @@ WatchDog
  
 
 <!-- 文件 -->
-[1]: https://www.baidu.com/
-[2]: /Users/Achilles/Desktop/JOYN资源/ios.txt 
+[1]: https://v.youku.com/v_show/id_XNDIyMTU0MjA2OA==.html?spm=a2hzp.8253876.0.0&f=52199188
 <!-- 指令 -->
