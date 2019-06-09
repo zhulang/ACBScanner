@@ -1,4 +1,36 @@
 #ifndef Demo_codeObfuscation_h
 #define Demo_codeObfuscation_h
-//confuse string at Sun Jun  9 15:36:04 CST 2019
+//confuse string at Sun Jun  9 15:48:34 CST 2019
+#define config yyGrOOzbZKYjmLCj
+#define archiver fxOcKqJlfbNqCroH
+#define peripheralDidStopScanning JPxcTkDMSKSBoWkR
+#define peripheralDidStartScanning EJTQqJchClqySHdW
+#define peripheralRecogniseDidFail zDDjZYTwqJNmyNdw
+#define connectPeripheral yNMWesrGBMunzMhg
+#define getResultData IOejBUXHtbdZvaYH
+#define removeAllServices EbPActZKIEksyPfD
+#define beginScanningBarCode uExhCSmqMDXXTUnz
+#define stopScanningBarCode ztJGiSJZYGgsrtCD
+#define beginScanningPeripheral RVmnDsXnzhRDONFO
+#define stopScanningPeripheral WlOyCpnUCBRDjpke
+#define manager JqadUgMHvxksFMmw
+#define resetConfig YsyFuzcNFeigOYyf
+#define setCenterMaxInterfaceNumber PJHRuAXhtypKwrkI
+#define getCenterMaxInterfaceNumber chXVDuESiPCnLWhE
+#define setCenterMaxCacheNumber MQPpQCfoeWDXulzE
+#define getCenterMaxCacheNumber TeRppQblYVVcaWxY
+#define setCenterUploadUrl GLVrozmRnUfURBZN
+#define getCenterUploadUrl vTzdPsPyLHEXMZzS
+#define setCenterDataUrl LiasNWsKOxaLEQKt
+#define getCenterDataUrl zkaDtsCyarMPSwlq
+#define setCenterAutoUpload jAtfBhhTOEXsrvxC
+#define getCenterAutoUpload tLbyHkjDjbZYEyjn
+#define setScannerName hyRHjTRnVjsGHTNf
+#define getScannerName pMyqutblrxsEzEYS
+#define setPeripheralBrightness kedHNprCptXcvQVB
+#define getPeripheralBrightness OUKTQJgxXWTHQHle
+#define setPeripheralTorchOn VeGViRHYxgNioOge
+#define getPeripheralTorchOn TKaDoMHVMnOQTRZy
+#define setPeripheralTorchAuto xbGEzqUXCLJjDKVT
+#define getPeripheralTorchAuto MusPcHcpnhMdBoOa
 #endif
