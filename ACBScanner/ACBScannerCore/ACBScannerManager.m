@@ -39,6 +39,12 @@ static NSString * CHARACTERISTIC_UUID = @"42AF46EB-296F-44FC-8C08-462FF5DE85E8";
 @property (nonatomic,strong) NSMutableSet * peripheralUUIDSet;
 @property (nonatomic,strong) NSMutableArray * resultData;
 
+@property (nonatomic,strong) NSLock *lock;
+
+@property (nonatomic,strong) NSLock *sendDataLock;
+
+@property (nonatomic,strong) NSDateFormatter * formatter;
+
 @end
 
 @implementation ACBScannerManager
@@ -203,9 +209,7 @@ static dispatch_once_t onceToken;
             [self.session stopRunning];
             if (self.uploadSelf)
             {
-                NSDateFormatter * dft = [[NSDateFormatter alloc] init];
-                [dft setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                NSDictionary * dataDic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":self.code,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
+                NSDictionary * dataDic = @{self.serviceName:@{@"date":[self.formatter stringFromDate:[NSDate date]],@"code":self.code,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
                 NSArray * arr = [NSArray arrayWithObject:dataDic];
                 [self uploadData:arr restartRunning:YES];
             }
@@ -507,6 +511,7 @@ static dispatch_once_t onceToken;
         if (![self.peripheralUUIDSet containsObject:uuid]) {
             if (self.peripheralArr && self.peripheralArr.count < [ACBScannerManager getCenterMaxInterfaceNumber]) {
                 if ([ACBScannerManager manager].isLinkScanGun) {
+                    [self.lock lock];
                     NSString * peripheralName = peripheral.name;
                     if (peripheralName && [peripheralName hasPrefix:[ACBScannerManager getScannerName]]) {
                         [self.peripheralUUIDSet addObject:uuid];
@@ -516,13 +521,16 @@ static dispatch_once_t onceToken;
                             [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
                         }
                     }
+                    [self.lock unlock];
                 }else{
+                    [self.lock lock];
                     [self.peripheralUUIDSet addObject:uuid];
                     [self.peripheralArr addObject:peripheral];
                     [self.manager connectPeripheral:peripheral options:nil];
                     if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralForPeripheralsUpdate:)]) {
                         [self.centerMachineDelegate centralForPeripheralsUpdate:self.peripheralArr];
                     }
+                    [self.lock unlock];
                 }
             }
         }
@@ -557,6 +565,30 @@ static dispatch_once_t onceToken;
     }
 }
 
+- (NSLock *)lock
+{
+    if (!_lock) {
+        _lock = [[NSLock alloc] init];
+    }
+    return _lock;
+}
+
+- (NSLock *)sendDataLock
+{
+    if (!_sendDataLock) {
+        _sendDataLock = [[NSLock alloc] init];
+    }
+    return _sendDataLock;
+}
+
+- (NSDateFormatter *)formatter
+{
+    if (!_formatter) {
+        _formatter = [[NSDateFormatter alloc] init];
+        [_formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }
+    return _formatter;
+}
 #pragma mark - CBPeripheralDelegate methods
 - (void)peripheral:(CBPeripheral *)peripheral didModifyServices:(NSArray<CBService *> *)invalidatedServices
 {
@@ -632,18 +664,17 @@ static dispatch_once_t onceToken;
         str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         str = [str stringByReplacingOccurrencesOfString:@"\0" withString:@""];
         if (str.length == 0) return;
-        
-        NSDateFormatter * dft = [[NSDateFormatter alloc] init];
-        [dft setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        dic = @{self.serviceName:@{@"date":[dft stringFromDate:[NSDate date]],@"code":str,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
+        dic = @{self.serviceName:@{@"date":[self.formatter stringFromDate:[NSDate date]],@"code":str,@"operator":self.scannerConfig.worker.name ? self.scannerConfig.worker.name : @"",@"jobNumber":self.scannerConfig.worker.number ? self.scannerConfig.worker.number : @""}};
+        [self.sendDataLock lock];
         [self.resultData insertObject:dic atIndex:0];
+        [self.sendDataLock unlock];
         if (self.autoUpload) {
             [self centerMachineUploadData:[NSArray arrayWithObject:dic] completeHandler:nil];
         }
         if (self.centerMachineDelegate && [self.centerMachineDelegate respondsToSelector:@selector(centralDidReadValueForCharacteristic:)]) {
             [self.centerMachineDelegate centralDidReadValueForCharacteristic:dic];
         }
-    }else {
+    }else if(dic && [dic isKindOfClass:[NSDictionary class]]){
         @synchronized (self.resultData) {
             [self.resultData insertObject:dic atIndex:0];
             if (self.autoUpload) {
