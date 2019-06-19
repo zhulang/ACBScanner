@@ -7,7 +7,7 @@
 //
 
 #import "CenterMachineSettingViewController.h"
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 
 @interface CenterMachineSettingViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *maxConnectLabel;

@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ACBScannerCongfig.h"
-#import "MJExtension.h"
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+
+@class ACBScannerCongfig;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -219,8 +219,8 @@ NS_ASSUME_NONNULL_BEGIN
  @ focusMode ,ACCaptureFocusMode ,default is ACCaptureFocusModeLocked
  @ 设置扫描仪是否需要自动对焦
  */
-+ (void)setPeripheralFocusMode:(ACBFocusMode)focusMode;
-+ (ACBFocusMode)getPeripheralFocusMode;
++ (void)setPeripheralFocusMode:(NSInteger)focusMode;
++ (NSInteger)getPeripheralFocusMode;
 
 /**
  @ name ,operator's name ,recommends not to set it too long
@@ -312,7 +312,7 @@ NS_ASSUME_NONNULL_BEGIN
   @ ACCaptureFocusMode ,default is ACCaptureFocusModeLocked
   @ 扫描仪是否需要自动对焦
   */
-@property (nonatomic, assign) ACBFocusMode focusMode;
+@property (nonatomic, assign) NSInteger focusMode;
 
 // operator's name ,recommends not to set it too long
 // 操作者名称

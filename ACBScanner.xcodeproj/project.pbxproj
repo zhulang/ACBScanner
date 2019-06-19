@@ -7,22 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09095C3439AFFB1CBD771A30 /* libPods-ACBScanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54E8CC2798EAFBEDF228DC6E /* libPods-ACBScanner.a */; };
 		6F3FBD44229833B400E3B97C /* CenterMachineSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD42229833B400E3B97C /* CenterMachineSettingViewController.m */; };
 		6F3FBD45229833B400E3B97C /* CenterMachineSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */; };
-		6F3FBD532298EAE600E3B97C /* ACBScannerCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD522298EAE600E3B97C /* ACBScannerCongfig.m */; };
 		6F3FBD57229901A500E3B97C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD56229901A500E3B97C /* Podfile */; };
 		6F3FBD5B22993BE800E3B97C /* CodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD5922993BE800E3B97C /* CodeTableViewCell.m */; };
 		6F3FBD5C22993BE800E3B97C /* CodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD5A22993BE800E3B97C /* CodeTableViewCell.xib */; };
-		6F3FBD632299611400E3B97C /* ACBScannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD622299611400E3B97C /* ACBScannerManager.m */; };
 		6F3FBD67229A7BAF00E3B97C /* PeripheralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */; };
 		6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */; };
 		6F8844E822ABA81D00E8AC49 /* ServiceAddressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */; };
 		6F8844E922ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */; };
-		6FB6A9F722AC3906009E41B3 /* func.list in Resources */ = {isa = PBXBuildFile; fileRef = 6FB6A9F622AC3906009E41B3 /* func.list */; };
-		B75002FD229D1B7400C070CC /* CenterCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B75002FC229D1B7400C070CC /* CenterCongfig.m */; };
-		B7500300229D1B8200C070CC /* ScannerOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = B75002FF229D1B8200C070CC /* ScannerOperator.m */; };
-		B7500303229D1B9300C070CC /* PeripheralCongfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B7500302229D1B9300C070CC /* PeripheralCongfig.m */; };
+		B706380B22B8DABC003834A0 /* WatchDogSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B706380A22B8DABC003834A0 /* WatchDogSDK.framework */; };
+		B706380C22B8DABC003834A0 /* WatchDogSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B706380A22B8DABC003834A0 /* WatchDogSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B752D1C3229696290035712F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B752D1C2229696290035712F /* AppDelegate.m */; };
 		B752D1C6229696290035712F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B752D1C5229696290035712F /* ViewController.m */; };
 		B752D1C9229696290035712F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B752D1C7229696290035712F /* Main.storyboard */; };
@@ -35,6 +30,7 @@
 		B752D1F822969E930035712F /* PeripheralMachineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B752D1F722969E930035712F /* PeripheralMachineTableViewController.m */; };
 		B76484FF22A8E9EB006A276B /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B76484FE22A8E9EB006A276B /* SettingViewController.m */; };
 		B764850222A8FF13006A276B /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B764850122A8FF13006A276B /* WKWebViewController.m */; };
+		BA09FFD7297EF1AAC35F2804 /* libPods-ACBScanner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B6E16BB0FD7CCDDB6DFC3E /* libPods-ACBScanner.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,36 +50,38 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B70637B022B8D384003834A0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B706380C22B8DABC003834A0 /* WatchDogSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		54E8CC2798EAFBEDF228DC6E /* libPods-ACBScanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ACBScanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04B6E16BB0FD7CCDDB6DFC3E /* libPods-ACBScanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ACBScanner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		646E7A9012C8F24E3667D49C /* Pods-ACBScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ACBScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-ACBScanner/Pods-ACBScanner.release.xcconfig"; sourceTree = "<group>"; };
 		6F3FBD41229833B400E3B97C /* CenterMachineSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CenterMachineSettingViewController.h; sourceTree = "<group>"; };
 		6F3FBD42229833B400E3B97C /* CenterMachineSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenterMachineSettingViewController.m; sourceTree = "<group>"; };
 		6F3FBD43229833B400E3B97C /* CenterMachineSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CenterMachineSettingViewController.xib; sourceTree = "<group>"; };
-		6F3FBD512298EAE600E3B97C /* ACBScannerCongfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACBScannerCongfig.h; sourceTree = "<group>"; };
-		6F3FBD522298EAE600E3B97C /* ACBScannerCongfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACBScannerCongfig.m; sourceTree = "<group>"; };
 		6F3FBD56229901A500E3B97C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6F3FBD5822993BE800E3B97C /* CodeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeTableViewCell.h; sourceTree = "<group>"; };
 		6F3FBD5922993BE800E3B97C /* CodeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeTableViewCell.m; sourceTree = "<group>"; };
 		6F3FBD5A22993BE800E3B97C /* CodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CodeTableViewCell.xib; sourceTree = "<group>"; };
-		6F3FBD612299611400E3B97C /* ACBScannerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACBScannerManager.h; sourceTree = "<group>"; };
-		6F3FBD622299611400E3B97C /* ACBScannerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACBScannerManager.m; sourceTree = "<group>"; };
 		6F3FBD64229A7BAF00E3B97C /* PeripheralSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralSettingViewController.h; sourceTree = "<group>"; };
 		6F3FBD65229A7BAF00E3B97C /* PeripheralSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralSettingViewController.m; sourceTree = "<group>"; };
 		6F3FBD66229A7BAF00E3B97C /* PeripheralSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeripheralSettingViewController.xib; sourceTree = "<group>"; };
 		6F8844E522ABA81D00E8AC49 /* ServiceAddressSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceAddressSettingViewController.h; sourceTree = "<group>"; };
 		6F8844E622ABA81D00E8AC49 /* ServiceAddressSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceAddressSettingViewController.m; sourceTree = "<group>"; };
 		6F8844E722ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceAddressSettingViewController.xib; sourceTree = "<group>"; };
-		6FB6A9F422AC380B009E41B3 /* confuse.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = confuse.sh; sourceTree = "<group>"; };
-		6FB6A9F622AC3906009E41B3 /* func.list */ = {isa = PBXFileReference; lastKnownFileType = text; path = func.list; sourceTree = "<group>"; };
-		6FB6A9F822AC3939009E41B3 /* codeObfuscation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codeObfuscation.h; sourceTree = "<group>"; };
 		6FB6A9F922AC3A7B009E41B3 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		B75002FB229D1B7400C070CC /* CenterCongfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CenterCongfig.h; sourceTree = "<group>"; };
-		B75002FC229D1B7400C070CC /* CenterCongfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenterCongfig.m; sourceTree = "<group>"; };
-		B75002FE229D1B8200C070CC /* ScannerOperator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerOperator.h; sourceTree = "<group>"; };
-		B75002FF229D1B8200C070CC /* ScannerOperator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScannerOperator.m; sourceTree = "<group>"; };
-		B7500301229D1B9300C070CC /* PeripheralCongfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralCongfig.h; sourceTree = "<group>"; };
-		B7500302229D1B9300C070CC /* PeripheralCongfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralCongfig.m; sourceTree = "<group>"; };
+		B706380A22B8DABC003834A0 /* WatchDogSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WatchDogSDK.framework; sourceTree = "<group>"; };
 		B752D1BE229696290035712F /* ACBScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACBScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B752D1C1229696290035712F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B752D1C2229696290035712F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -116,7 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09095C3439AFFB1CBD771A30 /* libPods-ACBScanner.a in Frameworks */,
+				B706380B22B8DABC003834A0 /* WatchDogSDK.framework in Frameworks */,
+				BA09FFD7297EF1AAC35F2804 /* libPods-ACBScanner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,36 +139,9 @@
 		0BB5108209B2A0A462515C47 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				54E8CC2798EAFBEDF228DC6E /* libPods-ACBScanner.a */,
+				04B6E16BB0FD7CCDDB6DFC3E /* libPods-ACBScanner.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		6F3FBD6022995D5400E3B97C /* ACBScannerCore */ = {
-			isa = PBXGroup;
-			children = (
-				6F3FBD612299611400E3B97C /* ACBScannerManager.h */,
-				6F3FBD622299611400E3B97C /* ACBScannerManager.m */,
-				6F3FBD512298EAE600E3B97C /* ACBScannerCongfig.h */,
-				6F3FBD522298EAE600E3B97C /* ACBScannerCongfig.m */,
-				B75002FB229D1B7400C070CC /* CenterCongfig.h */,
-				B75002FC229D1B7400C070CC /* CenterCongfig.m */,
-				B75002FE229D1B8200C070CC /* ScannerOperator.h */,
-				B75002FF229D1B8200C070CC /* ScannerOperator.m */,
-				B7500301229D1B9300C070CC /* PeripheralCongfig.h */,
-				B7500302229D1B9300C070CC /* PeripheralCongfig.m */,
-			);
-			path = ACBScannerCore;
-			sourceTree = "<group>";
-		};
-		6FB6A9F322AC37B3009E41B3 /* CodeObfuscation */ = {
-			isa = PBXGroup;
-			children = (
-				6FB6A9F422AC380B009E41B3 /* confuse.sh */,
-				6FB6A9F622AC3906009E41B3 /* func.list */,
-				6FB6A9F822AC3939009E41B3 /* codeObfuscation.h */,
-			);
-			path = CodeObfuscation;
 			sourceTree = "<group>";
 		};
 		71AE6D595C34F8A0AF1591CC /* Pods */ = {
@@ -217,8 +189,8 @@
 		B752D1B5229696290035712F = {
 			isa = PBXGroup;
 			children = (
+				B706380A22B8DABC003834A0 /* WatchDogSDK.framework */,
 				6FB6A9F922AC3A7B009E41B3 /* PrefixHeader.pch */,
-				6FB6A9F322AC37B3009E41B3 /* CodeObfuscation */,
 				B752D1C0229696290035712F /* ACBScanner */,
 				B752D1D92296962A0035712F /* ACBScannerTests */,
 				B752D1E42296962A0035712F /* ACBScannerUITests */,
@@ -242,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				B7500304229D5AC600C070CC /* ACBScannerUI */,
-				6F3FBD6022995D5400E3B97C /* ACBScannerCore */,
 				B752D1C1229696290035712F /* AppDelegate.h */,
 				B752D1C2229696290035712F /* AppDelegate.m */,
 				B752D1C4229696290035712F /* ViewController.h */,
@@ -305,7 +276,8 @@
 				B752D1BB229696290035712F /* Frameworks */,
 				B752D1BC229696290035712F /* Resources */,
 				2304C14EC1D766F3D21E0421 /* [CP] Copy Pods Resources */,
-				6FB6A9F522AC3858009E41B3 /* ShellScript */,
+				6FB6A9F522AC3858009E41B3 /* Run Script */,
+				B70637B022B8D384003834A0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -404,7 +376,6 @@
 				B752D1CB2296962A0035712F /* Assets.xcassets in Resources */,
 				6F3FBD45229833B400E3B97C /* CenterMachineSettingViewController.xib in Resources */,
 				6F8844E922ABA81D00E8AC49 /* ServiceAddressSettingViewController.xib in Resources */,
-				6FB6A9F722AC3906009E41B3 /* func.list in Resources */,
 				6F3FBD68229A7BAF00E3B97C /* PeripheralSettingViewController.xib in Resources */,
 				6F3FBD57229901A500E3B97C /* Podfile in Resources */,
 				B752D1C9229696290035712F /* Main.storyboard in Resources */,
@@ -450,7 +421,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ACBScanner/Pods-ACBScanner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6FB6A9F522AC3858009E41B3 /* ShellScript */ = {
+		6FB6A9F522AC3858009E41B3 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -459,13 +430,17 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$PROJECT_DIR/CodeObfuscation/confuse.sh\n\n";
+			shellScript = "
+
+";
+			showEnvVarsInLog = 0;
 		};
 		92836A82EB3478311BD64441 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -492,22 +467,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7500300229D1B8200C070CC /* ScannerOperator.m in Sources */,
-				B75002FD229D1B7400C070CC /* CenterCongfig.m in Sources */,
 				6F3FBD5B22993BE800E3B97C /* CodeTableViewCell.m in Sources */,
 				B76484FF22A8E9EB006A276B /* SettingViewController.m in Sources */,
 				6F8844E822ABA81D00E8AC49 /* ServiceAddressSettingViewController.m in Sources */,
 				6F3FBD67229A7BAF00E3B97C /* PeripheralSettingViewController.m in Sources */,
 				B764850222A8FF13006A276B /* WKWebViewController.m in Sources */,
 				6F3FBD44229833B400E3B97C /* CenterMachineSettingViewController.m in Sources */,
-				6F3FBD532298EAE600E3B97C /* ACBScannerCongfig.m in Sources */,
 				B752D1F822969E930035712F /* PeripheralMachineTableViewController.m in Sources */,
 				B752D1C6229696290035712F /* ViewController.m in Sources */,
 				B752D1D12296962A0035712F /* main.m in Sources */,
 				B752D1F522969D8B0035712F /* CenterMachineTableViewController.m in Sources */,
 				B752D1C3229696290035712F /* AppDelegate.m in Sources */,
-				6F3FBD632299611400E3B97C /* ACBScannerManager.m in Sources */,
-				B7500303229D1B9300C070CC /* PeripheralCongfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,6 +536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -625,6 +596,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -678,21 +650,44 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D328451ED3B647DB1A71BA0A /* Pods-ACBScanner.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: lang zhu (Z75TL9889H)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QRM8R826M7;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ACProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+				);
 				INFOPLIST_FILE = ACBScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ACProgressHUD\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MBProgressHUD\"",
+					"\"$(SRCROOT)\"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.watchdog.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = dev;
 				TARGETED_DEVICE_FAMILY = 1;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 			};
 			name = Debug;
 		};
@@ -700,21 +695,45 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 646E7A9012C8F24E3667D49C /* Pods-ACBScanner.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: lang zhu (QRM8R826M7)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QRM8R826M7;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ACProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+				);
 				INFOPLIST_FILE = ACBScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ACProgressHUD\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MBProgressHUD\"",
+					"\"$(SRCROOT)\"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.watchdog.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = aps;
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 			};
 			name = Release;
 		};

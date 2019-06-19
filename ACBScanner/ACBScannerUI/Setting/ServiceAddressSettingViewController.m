@@ -7,7 +7,7 @@
 //
 
 #import "ServiceAddressSettingViewController.h"
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 
 @interface ServiceAddressSettingViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *uploadUrltextField;

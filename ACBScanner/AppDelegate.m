@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 #import "ACProgressHUD.h"
 
 @interface AppDelegate ()

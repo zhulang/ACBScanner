@@ -9,8 +9,9 @@
 #import "PeripheralMachineTableViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <AVFoundation/AVFoundation.h>
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 #import "ACProgressHUD.h"
+#import <WatchDogSDK/MJExtension.h>
 
 @interface PeripheralMachineTableViewController ()<ACBScannerPeripheralDelegate>
 @property (nonatomic,copy) NSString * serviceName;

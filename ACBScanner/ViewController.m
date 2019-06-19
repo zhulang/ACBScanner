@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "CenterMachineTableViewController.h"
 #import "PeripheralMachineTableViewController.h"
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 #import <AVFoundation/AVFoundation.h>
 #import "ACProgressHUD.h"
 

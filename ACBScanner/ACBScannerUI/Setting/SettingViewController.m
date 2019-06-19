@@ -10,7 +10,7 @@
 #import "PeripheralSettingViewController.h"
 #import "CenterMachineSettingViewController.h"
 #import "ServiceAddressSettingViewController.h"
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 
 @interface SettingViewController ()
 

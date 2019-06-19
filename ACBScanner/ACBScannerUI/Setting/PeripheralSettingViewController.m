@@ -7,7 +7,7 @@
 //
 
 #import "PeripheralSettingViewController.h"
-#import "ACBScannerManager.h"
+#import <WatchDogSDK/ACBScannerManager.h>
 
 @interface PeripheralSettingViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *torchLabel;
@@ -66,7 +66,7 @@
 - (IBAction)fpsSliderValueDidChange:(UISlider *)sender
 {
     [ACBScannerManager setPeripheralFps:sender.value];
-    self.fpsLabel.text = [NSString stringWithFormat:@"手动调节补光亮度：%.2f",self.fpsSlider.value];
+    self.fpsLabel.text = [NSString stringWithFormat:@"每分钟扫描次数：%.0f",self.fpsSlider.value];
 }
 
 - (IBAction)focusValueDidChange:(UISegmentedControl *)sender
